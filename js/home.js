@@ -22,23 +22,26 @@ $(document).ready(function(){
             var data = { 'Javascript Responds': 'Wee!' }
             responseCallback(data);
         });
-        bridge.registerHandler('init', function (data, responseCallback) {
-            init(data);
+        bridge.registerHandler('initJS', function (data, responseCallback) {
+            initJS();
+        });
+        bridge.registerHandler('initData', function (data, responseCallback) {
+            initData(data);
         });
     });
+});
+//App 通知 HTML 初始化的方法
+function initJS(){
     if(window.Android){
-        Android.getData(url, GET, '', 'init');
-        //var imageURL = Android.getImageFile();
-        //alert("imageURL3:"+imageURL);
-        //$("#lunbotu").attr("src","data:image/jpeg;base64,"+imageURL);
+        Android.getData(url, GET, '', 'initData');
     }else if(iOS){
         iOS.callHandler('getData', {
             url: url,
             method: GET,
             params: '',
-            callBack: 'init'
+            callBack: 'initData'
         }, function (response) {
-            init(response);
+            initData(response);
         });
     }else{
         console.log("Android iOS 没有实现接口，HTML自己获取数据！");
@@ -48,14 +51,15 @@ $(document).ready(function(){
             data: {},
             dataType : 'JSON',
             success: function(result){
-                init(result);
+                initData(result);
             },
             error:function(msg) { console.log(msg)}
         });
     }
-});
+}
+
 //初始化方法
-function init(jsonData){
+function initData(jsonData){
     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
     if(data == null || data.status != 100){
         return;
@@ -75,14 +79,18 @@ function initSlider(ads){
     }else {
         var data = [];
         ads.forEach(function(elem){
-            data.push({content: elem.adPic});
+            data.push({
+                content: elem.adPic,
+                href: elem.adUrl
+            });
         });
         var html = '';
         for (var i = 0; i < data.length; i++) {
             html += '<i' + (i == 0 ? ' class="current"' : '') + '>' + (i + 1) + '</i>';
         }
+        $('#slider').html("");
         $('#slider_pages').html(html);
-
+        var isMove = false;
         var islider = new iSlider({
             dom: $('#slider')[0],
             data: data,
@@ -91,6 +99,23 @@ function initSlider(ads){
             onslidechange: function(current) {
                 $('#slider_pages').find('i').removeClass('current');
                 $($('#slider_pages').find('i').get(current)).addClass('current');
+            },
+            onslide: function(current){
+                isMove = false;
+            },
+            onslidestart: function(){
+                isMove = true;
+            },
+            onslideend: function(current){
+                if(isMove){
+                    if(window.Android){
+                        //Android.openWindow("com.uplady.teamspace.mine.PersonalHomePageAcitity", elem.userId);
+                    }else if(iOS){
+                        //iOS.callHandler('pushHotUserForUserId', elem.userId, function (response) {});
+                    }else {
+                        console.log("跳转地址："+this.data[this.sliderIndex].href);
+                    }
+                }
             }
         });
     }
