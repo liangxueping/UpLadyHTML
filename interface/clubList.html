@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Up Lady 俱乐部列表</title>
+    <script src="../js/jquery/jquery-1.10.2.js"></script>
+</head>
+<script>
+    var TOKEN = "e88a33d910378c7dcb32ce8b3eef2afb";
+    var BASE_URL = 'http://182.92.243.56/nbsc/';
+    var VERSION = "1.0.0";
+    $(document).ready(function(){
+        var method = "get";
+        var params = {
+            token:TOKEN,
+            clubId:7,
+            page:1,
+            size:10,
+            version:VERSION
+        };
+        var httpURL = BASE_URL+'clubList.do';
+        $.ajax({
+            type: method,
+            url: httpURL,
+            data: params,
+            dataType : 'JSON',
+            success: function(result){
+                $("#httpDiv").html("请求地址："+httpURL);
+                $("#paramsDiv").html("请求参数："+method+"<br>"+JSON.stringify(params));
+                $("#resultDiv").html("返回信息：<br>"+JSON.stringify(result));
+            },
+            error:function(msg) {
+                console.log(msg);
+                $("#httpDiv").html("请求地址："+httpURL);
+                $("#paramsDiv").html("请求参数："+method+"<br>"+JSON.stringify(params));
+                $("#resultDiv").html("错误信息：<br>"+JSON.stringify(msg.responseText));
+            }
+        });
+    });
+</script>
+<body>
+<div id="httpDiv">正在查询请稍等...</div>
+<div id="paramsDiv"></div>
+<div id="resultDiv">
+
+</div>
+</body>
+</html>

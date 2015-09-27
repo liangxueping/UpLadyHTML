@@ -7,109 +7,11 @@
     <title></title>
     <link rel="stylesheet" type="text/css" href="css/main.css" media="all" />
     <script src="js/jquery/jquery-1.10.2.js"></script>
-    <script>
-        var url = 'http://182.92.243.56/nbsc/discovery.do';
-        var GET = 'GET';
-        var POST = 'POST';
-        $(document).ready(function(){
-            if(window.Android){
-                Android.getData(url, GET, '', 'init');
-            }else{
-                $.ajax({
-                    type: GET,
-                    url: url,
-                    data: {},
-                    dataType : 'JSON',
-                    success: function(result){
-                        init(result);
-                    },
-                    error:function(msg) { console.log(msg)}
-                });
-            }
-        });
-        //初始化方法
-        function init(jsonData){
-            var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
-            if(data == null || data.status != 100){
-                return;
-            }
-            initLWhat(data.labels);
-            initWho(data.explores);
-            initLWhere(data.activities);
-        }
-        //初始化 玩什么
-        function initLWhat(labels){
-            if(!labels || labels.length == 0){
-                $('#home_what').hide();
-            }else {
-                $('#home_what_content').empty();
-                labels.forEach(function(elem){
-                    var $what =$('#home_what_content_a').clone().appendTo($('#home_what_content'));
-                    $what.find('.title').html(elem.labelTitle);
-                    $what.find('.sub_title').html(elem.labelDes);
-                    $what.find('.bg').css({
-                        'background-image': 'url('+elem.labelBgImg+')'
-                    });
-                    $what.click(function(){
-                        if(window.Android){
-                            Android.openWindow("com.uplady.teamspace.dynamic.FansActivity", "queryId:007s");
-                        }else {
-                            console.log("APP 未实现 openWindow 方法");
-                        }
-                    });
-                });
-                if(labels.length < 6){
-                    $('#home_what_footer').hide();
-                }
-            }
-        }
-        //初始化 跟谁玩
-        function initWho(explores){
-            if(!explores || explores.length == 0){
-                $('.home_who').hide();
-            }else {
-                $('#home_who_content').empty();
-                explores.forEach(function(elem){
-                    var $who =$('#home_who_content_a').clone().appendTo($('#home_who_content'));
-                    $who.find('#home_who_image').attr('src', elem.userIcon);
-                    $who.find('.uname').html(elem.userName);
-                    $who.find('.playing').html(elem.userDes);
-                    $who.click(function(){
-                        alert("跟谁玩："+elem.userName);
-                    });
-                });
-                if(explores.length < 6){
-                    $('#home_who_footer').hide();
-                }
-            }
-        }
-        //初始化 去哪玩
-        function initLWhere(activities){
-            if(!activities || activities.length == 0){
-                $('#home_where').hide();
-            }else {
-                $('#home_where_content').empty();
-                activities.forEach(function(elem){
-                    var $where =$('#home_where_content_a').clone().appendTo($('#home_where_content'));
-                    $where.find('.title').html(elem.activityName);
-                    $where.find('.fense').html(elem.activityPrice);
-                    $where.find('.bg').css({
-                        'background-image': 'url('+elem.activityLogo+')'
-                    });
-                    $where.click(function(){
-                        alert("去哪玩："+elem.labelTitle);
-                    });
-                });
-                if(activities.length < 6){
-                    $('#home_where_footer').hide();
-                }
-            }
-        }
-    </script>
+    <script src="js/home.js"></script>
 </head>
 <body>
 <div style="display:none;">
-    <a id="home_what_content_a" href="#" class="subject">
+    <a id="home_what_content_a" href="javascript:void(0)" class="subject">
         <div class="cover">
             <div class="bg" style="background-image: url(img/cover.jpg)"></div>
         </div>
@@ -122,7 +24,7 @@
             </div>
         </div>
     </a>
-    <a id="home_who_content_a" href="#" class="player">
+    <a id="home_who_content_a" href="javascript:void(0)" class="player">
         <div class="avat">
             <div class="img round_img">
                 <img id="home_who_image" src="img/uavat.jpg" alt="" />
@@ -135,7 +37,20 @@
             滑雪
         </div>
     </a>
-    <a id="home_where_content_a" href="#" class="activity">
+    <a id="home_clubs_content_a" href="javascript:void(0)" class="player">
+        <div class="avat">
+            <div class="img round_img">
+                <img id="home_clubs_image" src="img/uavat.jpg" alt="" />
+            </div>
+        </div>
+        <div class="uname text_overflow">
+            剑元上至
+        </div>
+        <div class="playing">
+            2万人关注
+        </div>
+    </a>
+    <a id="home_where_content_a" href="javascript:void(0)" class="activity">
         <div class="cover">
             <div class="bg" style="background-image: url(img/cover.jpg)"></div>
         </div>
@@ -148,11 +63,19 @@
             </div>
         </div>
     </a>
+    <a id="home_label_content_a" href="javascript:void(0)" class="label">
+                <span class="avat">
+                    <span class="img round_img">
+                        <img id="home_label_image" src="img/uavat.jpg" alt="" />
+                    </span>
+                </span>
+        <span class="title text_overflow">小菲菲</span>
+    </a>
 </div>
 <div class="croll_slider">
     <div class="slide">
         <div class="img">
-            <img src="img/cover.jpg" alt="" />
+            <img id="lunbotu" src="img/cover.jpg" alt="" />
         </div>
     </div>
 </div>
@@ -166,7 +89,7 @@
 
     </div>
     <div id="home_what_footer" class="home_block_footer">
-        <a href="#" class="show_more text_overflow">更多好玩的项目<i class="i iA iA_middle iA_right iA_gray"></i></a>
+        <a href="javascript:void(0)" class="show_more text_overflow">更多好玩的项目<i class="i iA iA_middle iA_right iA_gray"></i></a>
     </div>
 </div>
 <div id="home_who" class="home_block">
@@ -179,7 +102,7 @@
 
     </div>
     <div id="home_who_footer" class="home_block_footer">
-        <a href="#" class="show_more text_overflow">更多亮闪闪的达人<i class="i iA iA_middle iA_right iA_gray"></i></a>
+        <a href="javascript:void(0)" class="show_more text_overflow">更多亮闪闪的达人<i class="i iA iA_middle iA_right iA_gray"></i></a>
     </div>
 </div>
 <div id="home_where" class="home_block">
@@ -188,58 +111,16 @@
             <i class="i iG iG_location"></i>去哪玩
         </div>
     </div>
-    <div id="home_where_content" class="home_block_content activity_list cfix">
-        <a href="#" class="activity">
-            <div class="cover">
-                <div class="bg" style="background-image: url(img/cover.jpg)"></div>
-            </div>
-            <div class="card">
-                <div class="title">
-                    超值带跟 拍土耳其5天4晚
-                </div>
-                <div class="fense">
-                    免费
-                </div>
-            </div> </a>
-        <a href="#" class="activity">
-            <div class="cover">
-                <div class="bg" style="background-image: url(img/cover.jpg)"></div>
-            </div>
-            <div class="card">
-                <div class="title">
-                    超值带跟 拍土耳其5天4晚
-                </div>
-                <div class="fense">
-                    免费
-                </div>
-            </div> </a>
-        <a href="#" class="activity">
-            <div class="cover">
-                <div class="bg" style="background-image: url(img/cover.jpg)"></div>
-            </div>
-            <div class="card">
-                <div class="title">
-                    超值带跟 拍土耳其5天4晚
-                </div>
-                <div class="fense">
-                    免费
-                </div>
-            </div> </a>
-        <a href="#" class="activity">
-            <div class="cover">
-                <div class="bg" style="background-image: url(img/cover.jpg)"></div>
-            </div>
-            <div class="card">
-                <div class="title">
-                    超值带跟 拍土耳其5天4晚
-                </div>
-                <div class="fense">
-                    免费
-                </div>
-            </div> </a>
+    <div class="home_block_content">
+        <div id="home_clubs_content" class="home_block_content player_list cfix">
+
+        </div>
+        <div id="home_where_content" class="activity_list cfix">
+
+        </div>
     </div>
     <div id="home_where_footer" class="home_block_footer">
-        <a href="#" class="show_more text_overflow">更多好玩的活动<i class="i iA iA_middle iA_right iA_gray"></i></a>
+        <a href="javascript:void(0)" class="show_more text_overflow">更多好玩的活动<i class="i iA iA_middle iA_right iA_gray"></i></a>
     </div>
 </div>
 <div class="home_block">
@@ -249,46 +130,12 @@
         </div>
     </div>
     <div class="home_block_content">
-        <div class="label_list cfix">
-            <a href="#" class="label">
-                <span class="avat">
-                    <span class="img round_img">
-                        <img src="img/uavat.jpg" alt="" />
-                    </span>
-                </span>
-                <span class="title text_overflow">
-                    小菲菲
-                </span> </a>
-            <a href="#" class="label">
-                <span class="avat">
-                    <span class="img round_img">
-                        <img src="img/uavat.jpg" alt="" />
-                    </span>
-                </span>
-                <span class="title text_overflow">
-                    小菲菲
-                </span> </a>
-            <a href="#" class="label">
-                <span class="avat">
-                    <span class="img round_img">
-                        <img src="img/uavat.jpg" alt="" />
-                    </span>
-                </span>
-                <span class="title text_overflow">
-                    小菲菲
-                </span> </a>
-            <a href="#" class="label">
-                <span class="avat">
-                    <span class="img round_img">
-                        <img src="img/uavat.jpg" alt="" />
-                    </span>
-                </span>
-                <span class="title text_overflow">小菲菲</span>
-            </a>
+        <div id="home_label_content" class="label_list cfix">
+
         </div>
     </div>
-    <div class="home_block_footer">
-        <a href="#" class="show_more text_overflow">更多热门的标签<i class="i iA iA_middle iA_right iA_gray"></i></a>
+    <div id="home_label_footer" class="home_block_footer">
+        <a href="javascript:void(0)" class="show_more text_overflow">更多热门的标签<i class="i iA iA_middle iA_right iA_gray"></i></a>
     </div>
 </div>
 </body>
