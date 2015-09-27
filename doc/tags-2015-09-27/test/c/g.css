@@ -132,7 +132,7 @@ body {
   background: #CCC;
 }
 .iG {
-  background: url("../img/iG.png") 1000px no-repeat;
+  background: url("../../i/iG.png") 1000px no-repeat;
   -webkit-background-size: 100px auto;
   -ms-background-size: 100px auto;
   background-size: 100px auto;

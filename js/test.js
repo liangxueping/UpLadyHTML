@@ -15,7 +15,7 @@ function connectWebViewJavascriptBridge(callback) {
     }
 }
 $(document).ready(function(){
-    //æ³¨å†ŒiOSæ–¹æ³•
+    //×¢²áiOS·½·¨
     connectWebViewJavascriptBridge(function (bridge) {
         iOS = bridge;
         bridge.init(function (message, responseCallback) {
@@ -41,7 +41,7 @@ $(document).ready(function(){
             init(response);
         });
     }else{
-        console.log("Android iOS æ²¡æœ‰å®ç°æ¥å£ï¼ŒHTMLè‡ªå·±è·å–æ•°æ®ï¼");
+        console.log("Android iOS Ã»ÓĞÊµÏÖ½Ó¿Ú£¬HTML×Ô¼º»ñÈ¡Êı¾İ£¡");
         $.ajax({
             type: GET,
             url: url,
@@ -54,7 +54,7 @@ $(document).ready(function(){
         });
     }
 });
-//åˆå§‹åŒ–æ–¹æ³•
+//³õÊ¼»¯·½·¨
 function init(jsonData){
     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
     if(data == null || data.status != 100){
@@ -68,7 +68,7 @@ function init(jsonData){
     initLWhere(data.activities);
     initLLabel(data.labels);
 }
-//åˆå§‹åŒ– è½®æ’­å›¾
+//³õÊ¼»¯ ÂÖ²¥Í¼
 function initSlider(ads){
     if(!ads || ads.length == 0){
         $('#slider').hide();
@@ -96,7 +96,7 @@ function initSlider(ads){
     }
 }
 
-//åˆå§‹åŒ– ç©ä»€ä¹ˆ
+//³õÊ¼»¯ ÍæÊ²Ã´
 function initLWhat(labels){
     if(!labels || labels.length == 0){
         $('#home_what').hide();
@@ -113,7 +113,7 @@ function initLWhat(labels){
                 if(window.Android){
                     //Android.openWindow("com.uplady.teamspace.dynamic.FansActivity", "queryId:007s");
                 }else {
-                    console.log("APP æœªå®ç° openWindow æ–¹æ³•");
+                    console.log("APP Î´ÊµÏÖ openWindow ·½·¨");
                 }
             });
         });
@@ -122,7 +122,7 @@ function initLWhat(labels){
         }
     }
 }
-//åˆå§‹åŒ– è·Ÿè°ç©
+//³õÊ¼»¯ ¸úË­Íæ
 function initWho(explores){
     if(!explores || explores.length == 0){
         $('.home_who').hide();
@@ -131,7 +131,7 @@ function initWho(explores){
         explores.forEach(function(elem){
             var $who =$('#home_who_content_a').clone().appendTo($('#home_who_content'));
             if(elem.userIcon && elem.userIcon.indexOf("localhost") == -1){
-                $who.find('img').attr('src', elem.userIcon);
+                $who.find('#home_who_image').attr('src', elem.userIcon);
             }
             $who.find('.uname').html(elem.userName);
             $who.find('.playing').html(elem.userDes);
@@ -141,7 +141,7 @@ function initWho(explores){
                 }else if(iOS){
                     iOS.callHandler('pushHotUserForUserId', elem.userId, function (response) {});
                 }else {
-                    console.log("APP æœªå®ç° openWindow æ–¹æ³•");
+                    console.log("APP Î´ÊµÏÖ openWindow ·½·¨");
                 }
             });
         });
@@ -150,7 +150,7 @@ function initWho(explores){
         }
     }
 }
-//åˆå§‹åŒ– ä¿±ä¹éƒ¨
+//³õÊ¼»¯ ¾ãÀÖ²¿
 function initClub(clubs){
     if(!clubs || clubs.length == 0){
         $('#home_clubs').hide();
@@ -158,20 +158,20 @@ function initClub(clubs){
         $('#home_clubs_content').empty();
         clubs.forEach(function(elem){
             var $clubs =$('#home_clubs_content_a').clone().appendTo($('#home_clubs_content'));
-            $clubs.find('img').attr('src', elem.clubLogo);
+            $clubs.find('#home_clubs_image').attr('src', elem.clubLogo);
             $clubs.find('.uname').html(elem.clubName);
-            $clubs.find('.popular').html(elem.fansNum+"äººå…³æ³¨");
+            $clubs.find('.playing').html(elem.fansNum+"ÈË¹Ø×¢");
             $clubs.click(function(){
                 if(window.Android){
                     //Android.openWindow("com.uplady.teamspace.mine.PersonalHomePageAcitity", elem.userId);
                 }else {
-                    console.log("APP æœªå®ç° openWindow æ–¹æ³•");
+                    console.log("APP Î´ÊµÏÖ openWindow ·½·¨");
                 }
             });
         });
     }
 }
-//åˆå§‹åŒ– å»å“ªç©
+//³õÊ¼»¯ È¥ÄÄÍæ
 function initLWhere(activities){
     if(!activities || activities.length == 0){
         $('#home_where').hide();
@@ -188,7 +188,7 @@ function initLWhere(activities){
                 if(window.Android){
                     //Android.openWindow("com.uplady.teamspace.mine.PersonalHomePageAcitity", elem.userId);
                 }else {
-                    console.log("APP æœªå®ç° openWindow æ–¹æ³•");
+                    console.log("APP Î´ÊµÏÖ openWindow ·½·¨");
                 }
             });
         });
@@ -197,7 +197,7 @@ function initLWhere(activities){
         }
     }
 }
-//åˆå§‹åŒ– çƒ­é—¨æ ‡ç­¾
+//³õÊ¼»¯ ÈÈÃÅ±êÇ©
 function initLLabel(labels){
     if(!labels || labels.length == 0){
         $('.home_label').hide();
@@ -205,7 +205,7 @@ function initLLabel(labels){
         $('#home_label_content').empty();
         labels.forEach(function(elem){
             var $label =$('#home_label_content_a').clone().appendTo($('#home_label_content'));
-            $label.find('img').attr('src', elem.labelImg);
+            $label.find('#home_label_image').attr('src', elem.labelImg);
             $label.find('.title').html(elem.labelTitle);
             $label.click(function(){
                 if(window.Android){
@@ -213,7 +213,7 @@ function initLLabel(labels){
                 }else if(iOS){
                     iOS.callHandler('pushHotLabelDetailsForLabelId', elem.labelId, function (response) {});
                 }else {
-                    console.log("APP æœªå®ç° openWindow æ–¹æ³•");
+                    console.log("APP Î´ÊµÏÖ openWindow ·½·¨");
                 }
             });
         });
