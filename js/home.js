@@ -1,6 +1,7 @@
 /**
  * Created by liang on 2015/9/27.
  */
+var BASE_URL = "http://192.168.1.7:8080/UpLady/";
 var url = 'http://182.92.243.56/nbsc/discovery.do';
 var GET = 'GET';
 var POST = 'POST';
@@ -64,7 +65,7 @@ function initData(jsonData){
     if(data == null || data.status != 100){
         return;
     }
-
+    console.log(data);
     initSlider(data.ads);
     initLWhat(data.labels);
     initWho(data.explores);
@@ -81,7 +82,7 @@ function initSlider(ads){
         ads.forEach(function(elem){
             data.push({
                 content: elem.adPic,
-                href: elem.adUrl
+                params: elem
             });
         });
         var html = '';
@@ -108,12 +109,27 @@ function initSlider(ads){
             },
             onslideend: function(current){
                 if(isMove){
+                    var params = this.data[this.sliderIndex].params;
+                    var webViewData = {};
+                    //标题名
+                    webViewData.title = params.adName;
+                    //WebView跳转的地址
+                    webViewData.url = params.adUrl;
+                    //页面获取数据时使用的参数
+                    webViewData.params = params;
+                    //右侧按钮对象
+                    webViewData.rightButton = {};
+
+                    var appData = {};
+                    appData.data = webViewData;
                     if(window.Android){
-                        //Android.openWindow("com.uplady.teamspace.mine.PersonalHomePageAcitity", elem.userId);
+                        appData.method = "com.uplady.teamspace.search.WebViewActivity";
+                        Android.openWindow(JSON.stringify(appData));
                     }else if(iOS){
-                        //iOS.callHandler('pushHotUserForUserId', elem.userId, function (response) {});
+                        appData.method = "";
+                        iOS.callHandler('openWindow', JSON.stringify(appData), function (response) {});
                     }else {
-                        console.log("跳转地址："+this.data[this.sliderIndex].href);
+                        console.error("APP未注册JavaScript方法，跳转地址："+webViewData.url);
                     }
                 }
             }
@@ -135,10 +151,26 @@ function initLWhat(labels){
                 'background-image': 'url('+elem.labelBgImg+')'
             });
             $what.click(function(){
+                var params = elem;
+                var webViewData = {};
+                //标题名
+                webViewData.title = "活动详情";
+                //WebView跳转的地址
+                webViewData.url = BASE_URL+"home_what.html";
+                //页面获取数据时使用的参数
+                webViewData.params = params;
+                //右侧按钮对象
+                webViewData.rightButton = {};
+                var appData = {};
+                appData.data = webViewData;
                 if(window.Android){
-                    //Android.openWindow("com.uplady.teamspace.dynamic.FansActivity", "queryId:007s");
+                    appData.method = "com.uplady.teamspace.search.WebViewActivity";
+                    Android.openWindow(JSON.stringify(appData));
+                }else if(iOS){
+                    appData.method = "";
+                    iOS.callHandler('openWindow', JSON.stringify(appData), function (response) {});
                 }else {
-                    console.log("APP 未实现 openWindow 方法");
+                    console.error("APP未注册JavaScript方法，跳转地址："+webViewData.url);
                 }
             });
         });
@@ -161,12 +193,16 @@ function initWho(explores){
             $who.find('.uname').html(elem.userName);
             $who.find('.playing').html(elem.userDes);
             $who.click(function(){
+                var appData = {};
+                appData.data = elem;
                 if(window.Android){
-                    Android.openWindow("com.uplady.teamspace.mine.PersonalHomePageAcitity", elem.userId);
+                    appData.method = "com.uplady.teamspace.mine.PersonalHomePageAcitity";
+                    Android.openWindow(JSON.stringify(appData));
                 }else if(iOS){
-                    iOS.callHandler('pushHotUserForUserId', elem.userId, function (response) {});
+                    appData.method = "NBUserDetailsViewController";
+                    iOS.callHandler('openWindow', JSON.stringify(appData), function (response) {});
                 }else {
-                    console.log("APP 未实现 openWindow 方法");
+                    console.error("APP未注册JavaScript方法 initWho");
                 }
             });
         });
@@ -187,10 +223,26 @@ function initClub(clubs){
             $clubs.find('.uname').html(elem.clubName);
             $clubs.find('.popular').html(elem.fansNum+"人关注");
             $clubs.click(function(){
+                var params = elem;
+                var webViewData = {};
+                //标题名
+                webViewData.title = "俱乐部详情";
+                //WebView跳转的地址
+                webViewData.url = "";
+                //页面获取数据时使用的参数
+                webViewData.params = params;
+                //右侧按钮对象
+                webViewData.rightButton = {};
+                var appData = {};
+                appData.data = webViewData;
                 if(window.Android){
-                    //Android.openWindow("com.uplady.teamspace.mine.PersonalHomePageAcitity", elem.userId);
+                    appData.method = "com.uplady.teamspace.search.WebViewActivity";
+                    Android.openWindow(JSON.stringify(appData));
+                }else if(iOS){
+                    appData.method = "";
+                    iOS.callHandler('openWindow', JSON.stringify(appData), function (response) {});
                 }else {
-                    console.log("APP 未实现 openWindow 方法");
+                    console.error("APP未注册JavaScript方法，跳转地址："+webViewData.url);
                 }
             });
         });
@@ -210,10 +262,26 @@ function initLWhere(activities){
                 'background-image': 'url('+elem.activityLogo+')'
             });
             $where.click(function(){
+                var params = elem;
+                var webViewData = {};
+                //标题名
+                webViewData.title = elem.activityName;
+                //WebView跳转的地址
+                webViewData.url = "";
+                //页面获取数据时使用的参数
+                webViewData.params = params;
+                //右侧按钮对象
+                webViewData.rightButton = {};
+                var appData = {};
+                appData.data = webViewData;
                 if(window.Android){
-                    //Android.openWindow("com.uplady.teamspace.mine.PersonalHomePageAcitity", elem.userId);
+                    appData.method = "com.uplady.teamspace.search.WebViewActivity";
+                    Android.openWindow(JSON.stringify(appData));
+                }else if(iOS){
+                    appData.method = "";
+                    iOS.callHandler('openWindow', JSON.stringify(appData), function (response) {});
                 }else {
-                    console.log("APP 未实现 openWindow 方法");
+                    console.error("APP未注册JavaScript方法，跳转地址："+webViewData.url);
                 }
             });
         });
@@ -233,12 +301,16 @@ function initLLabel(labels){
             $label.find('img').attr('src', elem.labelImg);
             $label.find('.title').html(elem.labelTitle);
             $label.click(function(){
+                var appData = {};
+                appData.data = elem;
                 if(window.Android){
-                    //Android.openWindow("com.uplady.teamspace.mine.PersonalHomePageAcitity", elem.userId);
+                    appData.method = "com.uplady.teamspace.mine.LabelDetailActivity";
+                    Android.openWindow(JSON.stringify(appData));
                 }else if(iOS){
-                    iOS.callHandler('pushHotLabelDetailsForLabelId', elem.labelId, function (response) {});
+                    appData.method = "NBLabelDetailsViewController";
+                    iOS.callHandler('openWindow', JSON.stringify(appData), function (response) {});
                 }else {
-                    console.log("APP 未实现 openWindow 方法");
+                    console.error("APP未注册JavaScript方法 initLLabel");
                 }
             });
         });
