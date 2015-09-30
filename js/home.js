@@ -1,8 +1,14 @@
 /**
  * Created by liang on 2015/9/27.
  */
-var BASE_URL = "http://192.168.1.7:8080/UpLady/";
-var url = 'http://182.92.243.56/nbsc/discovery.do';
+/**
+ * http://123.56.226.201/upLadyTest/
+ */
+var BASE_URL = "http://192.168.1.103:8080/UpLady/";
+var AJAX_URL = 'http://www.uplady.cn/nbsc/';
+var TOKEN = "e88a33d910378c7dcb32ce8b3eef2afb";
+var VERSION = "1.0.0";
+var TYPE = "HTML";
 var GET = 'GET';
 var POST = 'POST';
 var iOS;
@@ -34,10 +40,10 @@ $(document).ready(function(){
 //App 通知 HTML 初始化的方法
 function initJS(){
     if(window.Android){
-        Android.getData(url, GET, '', 'initData');
+        Android.getData(AJAX_URL+"discovery.do", GET, '', 'initData');
     }else if(iOS){
         iOS.callHandler('getData', {
-            url: url,
+            url: AJAX_URL+"discovery.do",
             method: GET,
             params: '',
             callBack: 'initData'
@@ -48,7 +54,7 @@ function initJS(){
         console.log("Android iOS 没有实现接口，HTML自己获取数据！");
         $.ajax({
             type: GET,
-            url: url,
+            url: AJAX_URL+"discovery.do",
             data: {},
             dataType : 'JSON',
             success: function(result){
@@ -101,13 +107,13 @@ function initSlider(ads){
                 $('#slider_pages').find('i').removeClass('current');
                 $($('#slider_pages').find('i').get(current)).addClass('current');
             },
-            onslide: function(current){
+            onslide: function(){
                 isMove = false;
             },
             onslidestart: function(){
                 isMove = true;
             },
-            onslideend: function(current){
+            onslideend: function(){
                 if(isMove){
                     var params = this.data[this.sliderIndex].params;
                     var webViewData = {};
@@ -126,7 +132,7 @@ function initSlider(ads){
                         appData.method = "com.uplady.teamspace.search.WebViewActivity";
                         Android.openWindow(JSON.stringify(appData));
                     }else if(iOS){
-                        appData.method = "";
+                        appData.method = "NBPublicWebViewController";
                         iOS.callHandler('openWindow', JSON.stringify(appData), function (response) {});
                     }else {
                         console.error("APP未注册JavaScript方法，跳转地址："+webViewData.url);
@@ -160,14 +166,19 @@ function initLWhat(labels){
                 //页面获取数据时使用的参数
                 webViewData.params = params;
                 //右侧按钮对象
-                webViewData.rightButton = {};
+                webViewData.rightButton = {
+                    title: "项目",
+                    icon: 0,
+                    eventType: 0,
+                    url: BASE_URL+"home_what_more.html"
+                };
                 var appData = {};
                 appData.data = webViewData;
                 if(window.Android){
                     appData.method = "com.uplady.teamspace.search.WebViewActivity";
                     Android.openWindow(JSON.stringify(appData));
                 }else if(iOS){
-                    appData.method = "";
+                    appData.method = "NBPublicWebViewController";
                     iOS.callHandler('openWindow', JSON.stringify(appData), function (response) {});
                 }else {
                     console.error("APP未注册JavaScript方法，跳转地址："+webViewData.url);
@@ -176,6 +187,30 @@ function initLWhat(labels){
         });
         if(labels.length < 6){
             $('#home_what_footer').hide();
+        }else {
+            $('#home_what_footer').click(function(){
+                var params = {};
+                var webViewData = {};
+                //标题名
+                webViewData.title = "项目";
+                //WebView跳转的地址
+                webViewData.url = BASE_URL+"home_what_more.html";
+                //页面获取数据时使用的参数
+                webViewData.params = params;
+                //右侧按钮对象
+                webViewData.rightButton = {};
+                var appData = {};
+                appData.data = webViewData;
+                if(window.Android){
+                    appData.method = "com.uplady.teamspace.search.WebViewActivity";
+                    Android.openWindow(JSON.stringify(appData));
+                }else if(iOS){
+                    appData.method = "NBPublicWebViewController";
+                    iOS.callHandler('openWindow', JSON.stringify(appData), function (response) {});
+                }else {
+                    console.error("APP未注册JavaScript方法，跳转地址："+webViewData.url);
+                }
+            });
         }
     }
 }
@@ -239,7 +274,7 @@ function initClub(clubs){
                     appData.method = "com.uplady.teamspace.search.WebViewActivity";
                     Android.openWindow(JSON.stringify(appData));
                 }else if(iOS){
-                    appData.method = "";
+                    appData.method = "NBPublicWebViewController";
                     iOS.callHandler('openWindow', JSON.stringify(appData), function (response) {});
                 }else {
                     console.error("APP未注册JavaScript方法，跳转地址："+webViewData.url);
@@ -278,7 +313,7 @@ function initLWhere(activities){
                     appData.method = "com.uplady.teamspace.search.WebViewActivity";
                     Android.openWindow(JSON.stringify(appData));
                 }else if(iOS){
-                    appData.method = "";
+                    appData.method = "NBPublicWebViewController";
                     iOS.callHandler('openWindow', JSON.stringify(appData), function (response) {});
                 }else {
                     console.error("APP未注册JavaScript方法，跳转地址："+webViewData.url);

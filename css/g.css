@@ -419,6 +419,10 @@ html {
   font-size: 16px;
   color: #FFF;
 }
+.dreaming.active {
+  background: #FFD749;
+  color: #000;
+}
 .dreaming .i {
   margin-right: 5px;
 }
@@ -461,7 +465,7 @@ html {
   height: 38px;
   line-height: 40px;
 }
-.expand_navs .nav.active {
+.expand_navs .nav .active {
   padding-bottom: 0;
   border-bottom: 2px solid #FFD800;
 }
@@ -1713,7 +1717,7 @@ html {
   background: #FFD800;
 }
 .club_list_slider .slider {
-  height: 266px;
+  /*height: 266px;*/
 }
 .club_list_slider .slider_pages {
   position: relative;
