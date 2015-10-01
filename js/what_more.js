@@ -12,6 +12,15 @@ var TYPE = "HTML";
 var GET = 'GET';
 var POST = 'POST';
 var iOS;
+function connectWebViewJavascriptBridge(callback) {
+    if (window.WebViewJavascriptBridge) {
+        callback(WebViewJavascriptBridge)
+    } else {
+        document.addEventListener('WebViewJavascriptBridgeReady', function() {
+            callback(WebViewJavascriptBridge)
+        }, false)
+    }
+}
 $(document).ready(function(){
     //注册iOS方法
     connectWebViewJavascriptBridge(function (bridge) {

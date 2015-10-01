@@ -14,6 +14,15 @@ var POST = 'POST';
 var iOS;
 var isMove = false;
 var $imgZoomer;
+function connectWebViewJavascriptBridge(callback) {
+    if (window.WebViewJavascriptBridge) {
+        callback(WebViewJavascriptBridge)
+    } else {
+        document.addEventListener('WebViewJavascriptBridgeReady', function() {
+            callback(WebViewJavascriptBridge)
+        }, false)
+    }
+}
 $(document).ready(function(){
     //注册iOS方法
     connectWebViewJavascriptBridge(function (bridge) {
@@ -44,7 +53,7 @@ $(document).ready(function(){
             addFavoriteUser(data);
         });
         bridge.registerHandler('delFavoriteUser', function (data, responseCallback) {
-            initActivityList(data);
+            delFavoriteUser(data);
         });
 
 

@@ -170,7 +170,8 @@ function initLWhat(labels){
                     title: "项目",
                     icon: 0,
                     eventType: 0,
-                    url: BASE_URL+"home_what_more.html"
+                    url: BASE_URL+"home_what_more.html",
+                    rightButton: {}
                 };
                 var appData = {};
                 appData.data = webViewData;
@@ -263,7 +264,7 @@ function initClub(clubs){
                 //标题名
                 webViewData.title = "俱乐部详情";
                 //WebView跳转的地址
-                webViewData.url = "";
+                webViewData.url = BASE_URL+"club.html";
                 //页面获取数据时使用的参数
                 webViewData.params = params;
                 //右侧按钮对象
@@ -300,9 +301,9 @@ function initLWhere(activities){
                 var params = elem;
                 var webViewData = {};
                 //标题名
-                webViewData.title = elem.activityName;
+                webViewData.title = "活动详情";
                 //WebView跳转的地址
-                webViewData.url = "";
+                webViewData.url = BASE_URL+"activity.html";
                 //页面获取数据时使用的参数
                 webViewData.params = params;
                 //右侧按钮对象
