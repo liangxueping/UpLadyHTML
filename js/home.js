@@ -1,26 +1,7 @@
 /**
  * Created by liang on 2015/9/27.
  */
-/**
- * http://123.56.226.201/upLadyTest/
- */
-var BASE_URL = "http://192.168.1.103:8080/UpLady/";
-var AJAX_URL = 'http://www.uplady.cn/nbsc/';
-var TOKEN = "e88a33d910378c7dcb32ce8b3eef2afb";
-var VERSION = "1.0.0";
-var TYPE = "HTML";
-var GET = 'GET';
-var POST = 'POST';
-var iOS;
-function connectWebViewJavascriptBridge(callback) {
-    if (window.WebViewJavascriptBridge) {
-        callback(WebViewJavascriptBridge)
-    } else {
-        document.addEventListener('WebViewJavascriptBridgeReady', function() {
-            callback(WebViewJavascriptBridge)
-        }, false)
-    }
-}
+document.write("<script src='js/config.js'></script>");
 $(document).ready(function(){
     //注册iOS方法
     connectWebViewJavascriptBridge(function (bridge) {
@@ -262,7 +243,7 @@ function initClub(clubs){
                 var params = elem;
                 var webViewData = {};
                 //标题名
-                webViewData.title = "俱乐部详情";
+                webViewData.title = elem.clubName+"的主页";
                 //WebView跳转的地址
                 webViewData.url = BASE_URL+"club.html";
                 //页面获取数据时使用的参数

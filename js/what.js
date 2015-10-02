@@ -1,28 +1,7 @@
 /**
  * Created by liang on 2015/9/27.
  */
-/**
- * http://123.56.226.201/upLadyTest/
- */
-var BASE_URL = "http://192.168.1.103:8080/UpLady/";
-var AJAX_URL = 'http://www.uplady.cn/nbsc/';
-var TOKEN = "e88a33d910378c7dcb32ce8b3eef2afb";
-var VERSION = "1.0.0";
-var TYPE = "HTML";
-var GET = 'GET';
-var POST = 'POST';
-var iOS;
-var isMove = false;
-var $imgZoomer;
-function connectWebViewJavascriptBridge(callback) {
-    if (window.WebViewJavascriptBridge) {
-        callback(WebViewJavascriptBridge)
-    } else {
-        document.addEventListener('WebViewJavascriptBridgeReady', function() {
-            callback(WebViewJavascriptBridge)
-        }, false)
-    }
-}
+document.write("<script src='js/config.js'></script>");
 $(document).ready(function(){
     //注册iOS方法
     connectWebViewJavascriptBridge(function (bridge) {
@@ -104,7 +83,7 @@ function initJS(){
                 type: TYPE
             };
             getUserListData(params);
-            iOS.callHandler('getData', {URL: METHOD_URL, method: GET, params: JSON.stringify(data), callBack: CALL_BACK}, function (response) {});
+            iOS.callHandler('getData', {url: METHOD_URL, method: GET, params: JSON.stringify(data), callBack: CALL_BACK}, function (response) {});
         });
     }else{
         console.log("Android iOS 没有实现接口，HTML自己获取数据！");
@@ -155,7 +134,7 @@ function getUserListData(){
         if(window.Android){
             Android.getData(METHOD_URL, GET, JSON.stringify(data), CALL_BACK);
         }else if(iOS){
-            iOS.callHandler('getData', {URL: METHOD_URL, method: GET, params: JSON.stringify(data), callBack: CALL_BACK}, function (response) {});
+            iOS.callHandler('getData', {url: METHOD_URL, method: GET, params: JSON.stringify(data), callBack: CALL_BACK}, function (response) {});
         }
         //$.ajax({
         //    type: GET,
@@ -195,7 +174,7 @@ function getActivityListData(){
         if(window.Android){
             Android.getData(METHOD_URL, GET, JSON.stringify(data), CALL_BACK);
         }else if(iOS){
-            iOS.callHandler('getData', {URL: METHOD_URL, method: GET, params: JSON.stringify(data), callBack: CALL_BACK}, function (response) {});
+            iOS.callHandler('getData', {url: METHOD_URL, method: GET, params: JSON.stringify(data), callBack: CALL_BACK}, function (response) {});
         }
         //$.ajax({
         //    type: GET,
@@ -229,7 +208,7 @@ function getActivityListData(){
         if(window.Android){
             Android.getData(METHOD_URL, GET, JSON.stringify(data), CALL_BACK);
         }else if(iOS){
-            iOS.callHandler('getData', {URL: METHOD_URL, method: GET, params: JSON.stringify(data), callBack: CALL_BACK}, function (response) {});
+            iOS.callHandler('getData', {url: METHOD_URL, method: GET, params: JSON.stringify(data), callBack: CALL_BACK}, function (response) {});
         }
         //$.ajax({
         //    type: GET,
@@ -540,14 +519,15 @@ function initClubList(jsonData){
     }
 }
 //点击俱乐部头像
-function clickClub(params){
+function clickClub(jsonData){
+    var data = jsonData = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
     var webViewData = {};
     //标题名
-    webViewData.title = params.clubName+"的主页";
+    webViewData.title = data.clubName+"的主页";
     //WebView跳转的地址
     webViewData.url = BASE_URL+"club.html";
     //页面获取数据时使用的参数
-    webViewData.params = params;
+    webViewData.params = data;
     //右侧按钮对象
     webViewData.rightButton = {};
 

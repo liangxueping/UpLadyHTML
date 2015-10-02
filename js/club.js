@@ -1,26 +1,7 @@
 /**
  * Created by liang on 2015/9/27.
  */
-/**
- * http://123.56.226.201/upLadyTest/
- */
-var BASE_URL = "http://192.168.1.103:8080/UpLady/";
-var AJAX_URL = 'http://www.uplady.cn/nbsc/';
-var TOKEN = "e88a33d910378c7dcb32ce8b3eef2afb";
-var VERSION = "1.0.0";
-var TYPE = "HTML";
-var GET = 'GET';
-var POST = 'POST';
-var iOS;
-function connectWebViewJavascriptBridge(callback) {
-    if (window.WebViewJavascriptBridge) {
-        callback(WebViewJavascriptBridge)
-    } else {
-        document.addEventListener('WebViewJavascriptBridgeReady', function() {
-            callback(WebViewJavascriptBridge)
-        }, false)
-    }
-}
+document.write("<script src='js/config.js'></script>");
 $(document).ready(function(){
     //注册iOS方法
     connectWebViewJavascriptBridge(function (bridge) {
@@ -77,10 +58,10 @@ function initJS(){
             params = response;
             params = typeof params == 'string' ? JSON.parse(params) : params;
             data.userId = params.clubId;
-            iOS.callHandler('getData', {URL: METHOD_URL, method: GET, params: JSON.stringify(data), callBack: CALL_BACK}, function (response) {});
+            iOS.callHandler('getData', {url: METHOD_URL, method: GET, params: JSON.stringify(data), callBack: CALL_BACK}, function (response) {});
             METHOD_URL = AJAX_URL+"userInfo.do";
             CALL_BACK = "initUserInfo";
-            iOS.callHandler('getData', {URL: METHOD_URL, method: GET, params: JSON.stringify(data), callBack: CALL_BACK}, function (response) {});
+            iOS.callHandler('getData', {url: METHOD_URL, method: GET, params: JSON.stringify(data), callBack: CALL_BACK}, function (response) {});
         });
     }else {
         console.error("Android iOS 没有实现getData接口！");
@@ -133,7 +114,7 @@ function initUserInfo(jsonData){
     //});
     $("#userinfo").find("img").attr("src", userData.userIcon);
     $("#userinfo").find(".uname").html(userData.userName);
-    $("#userinfo").find(".sign").html(userData.userTitle);
+    $("#userinfo").find(".sign").html(userData.userDes);
 
     $("#album").find(".des").html(userData.photoNum);
     $("#fans").find(".des").html(userData.fansNum);
@@ -189,7 +170,7 @@ function initUserInfo(jsonData){
             if(window.Android){
                 Android.getData(METHOD_URL, GET, JSON.stringify(data), CALL_BACK);
             }else if(iOS){
-                iOS.callHandler('getData', {URL: METHOD_URL, method: GET, params: JSON.stringify(data), callBack: CALL_BACK}, function (response) {});
+                iOS.callHandler('getData', {url: METHOD_URL, method: GET, params: JSON.stringify(data), callBack: CALL_BACK}, function (response) {});
             }
         }
     });
@@ -206,7 +187,7 @@ function initUserInfo(jsonData){
             if(window.Android){
                 Android.getData(METHOD_URL, GET, JSON.stringify(data), CALL_BACK);
             }else if(iOS){
-                iOS.callHandler('getData', {URL: METHOD_URL, method: GET, params: JSON.stringify(data), callBack: CALL_BACK}, function (response) {});
+                iOS.callHandler('getData', {url: METHOD_URL, method: GET, params: JSON.stringify(data), callBack: CALL_BACK}, function (response) {});
             }
         }
     });
@@ -224,7 +205,7 @@ function initUserInfo(jsonData){
             if(window.Android){
                 Android.getData(METHOD_URL, GET, JSON.stringify(data), CALL_BACK);
             }else if(iOS){
-                iOS.callHandler('getData', {URL: METHOD_URL, method: GET, params: JSON.stringify(data), callBack: CALL_BACK}, function (response) {});
+                iOS.callHandler('getData', {url: METHOD_URL, method: GET, params: JSON.stringify(data), callBack: CALL_BACK}, function (response) {});
             }
         }
     });
