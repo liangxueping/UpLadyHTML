@@ -33,16 +33,16 @@ function initJS(){
         });
     }else{
         console.log("Android iOS 没有实现接口，HTML自己获取数据！");
-        $.ajax({
-            type: GET,
-            url: AJAX_URL+"discovery.do",
-            data: {},
-            dataType : 'JSON',
-            success: function(result){
-                initData(result);
-            },
-            error:function(msg) { console.log(msg)}
-        });
+        //$.ajax({
+        //    type: GET,
+        //    url: AJAX_URL+"discovery.do",
+        //    data: {},
+        //    dataType : 'JSON',
+        //    success: function(result){
+        //        initData(result);
+        //    },
+        //    error:function(msg) { console.log(msg)}
+        //});
     }
 }
 

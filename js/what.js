@@ -136,24 +136,6 @@ function getUserListData(){
         }else if(iOS){
             iOS.callHandler('getData', {url: METHOD_URL, method: GET, params: JSON.stringify(data), callBack: CALL_BACK}, function (response) {});
         }
-        //$.ajax({
-        //    type: GET,
-        //    url: AJAX_URL+"recommendUser.do",
-        //    data: {
-        //        token: TOKEN,
-        //        labelId: params.labelId,
-        //        page: 1,
-        //        size: 999,
-        //        version: "1.1.1"
-        //    },
-        //    dataType : 'JSON',
-        //    success: function(result){
-        //        console.log("获取达人数据：");
-        //        console.log(result);
-        //        initUserList(result);
-        //    },
-        //    error:function(msg) { console.log(msg)}
-        //});
     }
 }
 //获取 活动列表数据
@@ -176,24 +158,6 @@ function getActivityListData(){
         }else if(iOS){
             iOS.callHandler('getData', {url: METHOD_URL, method: GET, params: JSON.stringify(data), callBack: CALL_BACK}, function (response) {});
         }
-        //$.ajax({
-        //    type: GET,
-        //    url: AJAX_URL+"activityList.do",
-        //    data: {
-        //        token: TOKEN,
-        //        labelId: params.labelId,
-        //        page: 1,
-        //        size: 999,
-        //        version: "1.1.1"
-        //    },
-        //    dataType : 'JSON',
-        //    success: function(result){
-        //        console.log("获取活动数据：");
-        //        console.log(result);
-        //        initActivityList(result);
-        //    },
-        //    error:function(msg) { console.log(msg)}
-        //});
     }
     if(dataClubList){
         initClubList(dataClubList);
@@ -210,24 +174,6 @@ function getActivityListData(){
         }else if(iOS){
             iOS.callHandler('getData', {url: METHOD_URL, method: GET, params: JSON.stringify(data), callBack: CALL_BACK}, function (response) {});
         }
-        //$.ajax({
-        //    type: GET,
-        //    url: AJAX_URL+"clubList.do",
-        //    data: {
-        //        token: TOKEN,
-        //        labelId: params.labelId,
-        //        page: 1,
-        //        size: 999,
-        //        version: "1.1.1"
-        //    },
-        //    dataType : 'JSON',
-        //    success: function(result){
-        //        console.log("获取俱乐部数据：");
-        //        console.log(result);
-        //        initClubList(result);
-        //    },
-        //    error:function(msg) { console.log(msg)}
-        //});
     }
 }
 

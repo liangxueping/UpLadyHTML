@@ -41,26 +41,26 @@ function initJS(){
         });
     }else {
         console.log("Android iOS 没有实现接口，HTML自己获取数据！");
-        params = {
-            "clubId": 9,
-            "clubName": "鹤掌门",
-            "clubLogo": "http://182.92.243.56:8080/nbsc_image/images/avatar/8_1438333374615.jpg",
-            "fansNum": 27
-        }
-        $.ajax({
-            type: GET,
-            url: AJAX_URL+"clubDetail.do",
-            data: {
-                token: TOKEN,
-                clubId: params.clubId
-            },
-            dataType : 'JSON',
-            success: function(result){
-                console.log(result);
-                initClubDetail(result);
-            },
-            error:function(msg) { console.log(msg)}
-        });
+        //params = {
+        //    "clubId": 9,
+        //    "clubName": "鹤掌门",
+        //    "clubLogo": "http://182.92.243.56:8080/nbsc_image/images/avatar/8_1438333374615.jpg",
+        //    "fansNum": 27
+        //}
+        //$.ajax({
+        //    type: GET,
+        //    url: AJAX_URL+"clubDetail.do",
+        //    data: {
+        //        token: TOKEN,
+        //        clubId: params.clubId
+        //    },
+        //    dataType : 'JSON',
+        //    success: function(result){
+        //        console.log(result);
+        //        initClubDetail(result);
+        //    },
+        //    error:function(msg) { console.log(msg)}
+        //});
     }
 }
 //初始化 详情内容
