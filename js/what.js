@@ -272,12 +272,12 @@ function initLabelDetail(jsonData){
             labelId: labelDetail.labelId
         };
 
-        var METHOD_URL;
+        var METHOD_URL = AJAX_URL+"dreamAdd.do";
         var CALL_BACK = "initDreaming";
         if(labelDetail.ifDream != 1){
-            METHOD_URL = AJAX_URL+"dreamAdd.do";
+            params.type = 1;
         }else {
-            return;
+            params.type = 0;
         }
         if(window.Android){
             Android.getData(METHOD_URL, GET, JSON.stringify(params), CALL_BACK);
@@ -455,7 +455,14 @@ function initActivityList(jsonData){
                 //页面获取数据时使用的参数
                 webViewData.params = params;
                 //右侧按钮对象
-                webViewData.rightButton = {};
+                webViewData.rightButton = {
+                    title:"活动详情",
+                    icon:1,
+                    eventType:2,
+                    url: ROOT_RUL,
+                    content: params.activityName,
+                    logo:params.activityLogo
+                };
                 if(window.Android){
                     Android.loadURL(JSON.stringify(webViewData));
                 }else if(iOS){

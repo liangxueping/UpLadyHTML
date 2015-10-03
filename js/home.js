@@ -313,7 +313,14 @@ function initLWhere(activities){
                 //页面获取数据时使用的参数
                 webViewData.params = params;
                 //右侧按钮对象
-                webViewData.rightButton = {};
+                webViewData.rightButton = {
+                    title:"活动详情",
+                    icon:1,
+                    eventType:2,
+                    url:ROOT_RUL,
+                    content: params.activityName,
+                    logo:params.activityLogo
+                };
                 var appData = {};
                 appData.data = webViewData;
                 if(window.Android){

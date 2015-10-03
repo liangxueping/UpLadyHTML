@@ -255,7 +255,7 @@ html {
 }
 .img img {
   width: 100%;
-  height: 75px;
+  height: 100%;
   vertical-align: top;
 }
 .round_img {
@@ -305,7 +305,7 @@ html {
 .download_app .logo .img {
   width: 136px;
   height: 32px;
-  background: url("../../i/logo1.png");
+  background: url("../img/logo1.png");
   -webkit-background-size: 100%;
   -ms-background-size: 100%;
   background-size: 100%;
@@ -419,18 +419,8 @@ html {
   font-size: 16px;
   color: #FFF;
 }
-.dreaming.active {
-  background: #FFD749;
-  color: #000;
-}
 .dreaming .i {
   margin-right: 5px;
-}
-#favorite {
-  position: absolute;
-  z-index: 9;
-  top: 12px;
-  right: 20px;
 }
 .subject_page_brand {
   position: relative;
@@ -1723,7 +1713,7 @@ html {
   background: #FFD800;
 }
 .club_list_slider .slider {
-  /*height: 266px;*/
+  height: 266px;
 }
 .club_list_slider .slider_pages {
   position: relative;
@@ -1731,7 +1721,4 @@ html {
 }
 .club_list_slider .slider_pages i {
   background: #000;
-}
-.equipment p{
-  height: 50px;
 }

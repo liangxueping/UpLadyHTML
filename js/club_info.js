@@ -80,6 +80,7 @@ function initClubDetail(jsonData){
             icon: 0,
             eventType: 0,
             url: BASE_URL+"club_info.html",
+            params: params,
             rightButton: {}
         };
 

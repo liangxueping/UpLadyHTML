@@ -26,9 +26,10 @@ $(document).ready(function(){
 });
 //初始化
 function initJS(){
-    var METHOD_URL = AJAX_URL+"recommendLabel.do";
+    var METHOD_URL = AJAX_URL+"getLabels.do";
     var CALL_BACK = "initRecommendLabel";
     var data = {
+        type: 2,
         page: 1,
         size: 999
     };
@@ -56,7 +57,7 @@ function initRecommendLabel(jsonData){
             $dom.find(".title").html(elem.labelTitle);
             $dom.find(".sub_title").html(elem.labelDes);
             var $dreaming = $dom.find(".dreaming");
-            if(elem.ifFavorite == 1){
+            if(elem.ifDreamList == 1){
                 $dreaming.addClass("active").html('<i class="i iA iA_pass iA_black"></i>已添加');
             }else {
                 $dreaming.removeClass("active").html('<i class="i iC iC_small iC_white"></i>添加梦想');
@@ -65,23 +66,36 @@ function initRecommendLabel(jsonData){
             $dreaming.click(function(){
                 isDreaming = true;
                 var params = {
-                    labelIds: elem.labelId
+                    labelId: elem.labelId
                 };
-                var METHOD_URL = AJAX_URL+"addFavoriteLabel.do";
-                var CALL_BACK = "addFavoriteLabel";
-                if(elem.ifFavorite != 1){
-                    METHOD_URL = AJAX_URL+"addFavoriteLabel.do";
+                var METHOD_URL = AJAX_URL+"dreamAdd.do";
+                var CALL_BACK;
+                if(elem.ifDreamList != 1){
                     CALL_BACK = "addFavoriteLabel";
-                    $dreaming.addClass("active").html('<i class="i iA iA_pass iA_black"></i>已添加');
-                    elem.ifFavorite = 1;
+                    params.type = 1;
+                    window.addFavoriteLabel = function (jsonData){
+                        var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
+                        if(data.status == 100){
+                            console.log("添加关注梦想项目成功！");
+                            $dreaming.addClass("active").html('<i class="i iA iA_pass iA_black"></i>已添加');
+                            elem.ifDreamList = 1;
+                        }else {
+                            console.error("添加关注梦想项目失败！");
+                        }
+                    }
                 }else {
-                    params = {
-                        labelId: elem.labelId
-                    };
-                    METHOD_URL = AJAX_URL+"delFavoriteLable.do";
                     CALL_BACK = "delFavoriteLable";
-                    $dreaming.removeClass("active").html('<i class="i iC iC_small iC_white"></i>添加梦想');
-                    elem.ifFavorite = 0;
+                    params.type = 0;
+                    window.delFavoriteLable = function (jsonData){
+                        var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
+                        if(data.status == 100){
+                            console.log("删除关注梦想项目成功！");
+                            $dreaming.removeClass("active").html('<i class="i iC iC_small iC_white"></i>添加梦想');
+                            elem.ifDreamList = 0;
+                        }else {
+                            console.error("删除关注梦想项目失败！");
+                        }
+                    }
                 }
                 if(window.Android){
                     Android.getData(METHOD_URL, GET, JSON.stringify(params), CALL_BACK);
@@ -99,7 +113,7 @@ function initRecommendLabel(jsonData){
                 var params = elem;
                 var webViewData = {};
                 //标题名
-                webViewData.title = "活动详情";
+                webViewData.title = params.labelTitle;
                 //WebView跳转的地址
                 webViewData.url = BASE_URL+"home_what.html";
                 //页面获取数据时使用的参数
@@ -119,21 +133,5 @@ function initRecommendLabel(jsonData){
                 }
             });
         });
-    }
-}
-function addFavoriteLabel(jsonData){
-    var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
-    if(data.status == 100){
-        console.log("添加关注梦想项目成功！");
-    }else {
-        console.error("添加关注梦想项目失败！");
-    }
-}
-function delFavoriteLable(jsonData){
-    var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
-    if(data.status == 100){
-        console.log("删除关注梦想项目成功！");
-    }else {
-        console.error("删除关注梦想项目失败！");
     }
 }

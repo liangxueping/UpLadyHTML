@@ -2,6 +2,13 @@
  * Created by liang on 2015/9/27.
  */
 document.write("<script src='js/config.js'></script>");
+//获取url中的参数
+function getUrlParam(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+    var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+    if (r != null) return unescape(r[2]); return null; //返回参数值
+}
+var activityId;
 $(document).ready(function(){
     //注册iOS方法
     connectWebViewJavascriptBridge(function (bridge) {
@@ -16,7 +23,17 @@ $(document).ready(function(){
         bridge.registerHandler('initActivityDetail', function (data, responseCallback) {
             initActivityDetail(data);
         });
+        bridge.registerHandler('addFavoriteActivity', function (data, responseCallback) {
+            addFavoriteActivity(data);
+        });
+        bridge.registerHandler('delFavoriteActivity', function (data, responseCallback) {
+            delFavoriteActivity(data);
+        });
     });
+    activityId = getUrlParam("activityId");
+    if(activityId){
+        initJS();
+    }
 });
 //初始化
 var params;
@@ -41,25 +58,24 @@ function initJS(){
             data.activityId = params.activityId;
             iOS.callHandler('getData', {url: METHOD_URL, method: GET, params: JSON.stringify(data), callBack: CALL_BACK}, function (response) {});
         });
+    }else if(activityId){
+        params = {
+            "activityId": activityId
+        };
+        $.ajax({
+            type: GET,
+            url: METHOD_URL,
+            data: {
+                activityId: activityId
+            },
+            dataType : 'JSON',
+            success: function(result){
+                initActivityDetail(result);
+            },
+            error:function(msg) { console.log(msg)}
+        });
     }else {
         console.error("Android iOS 没有实现getData接口！");
-        //params = {
-        //    "activityId": 1
-        //};
-        //$.ajax({
-        //    type: GET,
-        //    url: METHOD_URL,
-        //    data: {
-        //        token: TOKEN,
-        //        activityId: params.activityId,
-        //        version: "1.1.1"
-        //    },
-        //    dataType : 'JSON',
-        //    success: function(result){
-        //        initActivityDetail(result);
-        //    },
-        //    error:function(msg) { console.log(msg)}
-        //});
     }
 }
 //初始化页面
@@ -68,11 +84,58 @@ function initActivityDetail(jsonData){
     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
     activityDetail = data.activity;
     console.log(activityDetail);
-    $("#activity_title").find(".bg").css({
+    if(activityDetail.ifFavorite != 1){
+        $("#favorite").attr("src", "img/favorite_no.png");
+    }else {
+        $("#favorite").attr("src", "img/favorite_yes.png");
+    }
+    $("#favorite").click(function(){
+        var params = {
+            activityId: activityDetail.activityId
+        };
+        var METHOD_URL;
+        var CALL_BACK;
+        if(activityDetail.ifFavorite != 1){
+            METHOD_URL = AJAX_URL+"addFavoriteActivity.do";
+            CALL_BACK = "addFavoriteActivity";
+            window.addFavoriteActivity = function (jsonData){
+                var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
+                if(data.status == 100){
+                    console.log("添加关注活动成功！");
+                    $("#favorite").attr("src", "img/favorite_yes.png");
+                    activityDetail.ifFavorite = 1;
+                }else {
+                    console.error("添加关注活动失败！");
+                }
+            }
+        }else {
+            METHOD_URL = AJAX_URL+"delFavoriteActivity.do";
+            CALL_BACK = "delFavoriteActivity";
+            window.delFavoriteActivity = function (jsonData){
+                alert(jsonData);
+                var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
+                if(data.status == 100){
+                    console.log("删除关注活动成功！");
+                    $("#favorite").attr("src", "img/favorite_no.png");
+                    activityDetail.ifFavorite = 0;
+                }else {
+                    console.error("删除关注活动失败！");
+                }
+            }
+        }
+        if(window.Android){
+            Android.getData(METHOD_URL, GET, JSON.stringify(params), CALL_BACK);
+        }else if(iOS){
+            iOS.callHandler('getData', {url: METHOD_URL, method: GET, params: JSON.stringify(params), callBack: CALL_BACK}, function (response) {});
+        }else{
+            console.log("Android iOS 没有实现getData接口，HTML自己获取数据！");
+        }
+    });
+    $(".bg").css({
         'background-image': 'url('+activityDetail.clubLogo+')'
     });
-    $("#activity_title").find(".title").html(activityDetail.clubName);
-    $("#activity_title").find(".title").html(activityDetail.clubDes);
+    $(".title").html(activityDetail.clubName);
+    $(".description").html(activityDetail.clubDes);
     $("#activity_title").click(function(){
         var webViewData = {};
         //标题名
@@ -188,6 +251,7 @@ function initActivityDetail(jsonData){
             iOS.callHandler('callPhone', activityDetail.activityPhone, function (response) {});
         }else {
             console.error("APP未注册JavaScript方法，callPhone");
+            alert("报名电话："+activityDetail.activityPhone);
         }
     });
 }

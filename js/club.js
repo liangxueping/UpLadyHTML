@@ -65,41 +65,41 @@ function initJS(){
         });
     }else {
         console.error("Android iOS 没有实现getData接口！");
-        //params = {
-        //    "clubId": 7,
-        //    "clubName": "丛老湿",
-        //    "clubLogo": "http://182.92.243.56:8080/nbsc_image/images/avatar/7_1437496517075.jpg",
-        //    "fansNum": 26
-        //};
-        //$.ajax({
-        //    type: GET,
-        //    url: AJAX_URL+"userInfo.do",
-        //    data: {
-        //        token: TOKEN,
-        //        userId: params.clubId,
-        //        version: "1.1.1"
-        //    },
-        //    dataType : 'JSON',
-        //    success: function(result){
-        //        initUserInfo(result);
-        //    },
-        //    error:function(msg) { console.log(msg)}
-        //});
-        //$.ajax({
-        //    type: GET,
-        //    url: AJAX_URL+"dynamicImageList.do",
-        //    data: {
-        //        token: TOKEN,
-        //        userId: params.clubId,
-        //        type: TYPE,
-        //        version: "1.1.1"
-        //    },
-        //    dataType : 'JSON',
-        //    success: function(result){
-        //        initDynamicImageList(result);
-        //    },
-        //    error:function(msg) { console.log(msg)}
-        //});
+        params = {
+            "clubId": 7,
+            "clubName": "丛老湿",
+            "clubLogo": "http://182.92.243.56:8080/nbsc_image/images/avatar/7_1437496517075.jpg",
+            "fansNum": 26
+        };
+        $.ajax({
+            type: GET,
+            url: AJAX_URL+"userInfo.do",
+            data: {
+                token: TOKEN,
+                userId: params.clubId,
+                version: "1.1.1"
+            },
+            dataType : 'JSON',
+            success: function(result){
+                initUserInfo(result);
+            },
+            error:function(msg) { console.log(msg)}
+        });
+        $.ajax({
+            type: GET,
+            url: AJAX_URL+"dynamicImageList.do",
+            data: {
+                token: TOKEN,
+                userId: params.clubId,
+                type: TYPE,
+                version: "1.1.1"
+            },
+            dataType : 'JSON',
+            success: function(result){
+                initDynamicImageList(result);
+            },
+            error:function(msg) { console.log(msg)}
+        });
     }
 }
 //初始化 title
@@ -200,8 +200,8 @@ function initUserInfo(jsonData){
             var METHOD_URL = AJAX_URL+"activityList.do";
             var CALL_BACK = "initActivityList";
             var data = {};
-            data.labelId = params.clubId;
-            //data.labelId = 3;
+            data.clubId = params.clubId;
+            //data.clubId = 3;
             if(window.Android){
                 Android.getData(METHOD_URL, GET, JSON.stringify(data), CALL_BACK);
             }else if(iOS){
@@ -384,7 +384,14 @@ function initActivityList(jsonData){
                 //页面获取数据时使用的参数
                 webViewData.params = params;
                 //右侧按钮对象
-                webViewData.rightButton = {};
+                webViewData.rightButton = {
+                    title:"活动详情",
+                    icon:1,
+                    eventType:2,
+                    url:ROOT_RUL,
+                    content: params.activityName,
+                    logo:params.activityLogo
+                };
                 if(window.Android){
                     Android.loadURL(JSON.stringify(webViewData));
                 }else if(iOS){
