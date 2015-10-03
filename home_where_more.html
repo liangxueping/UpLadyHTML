@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="css/g.css" media="all">
+    <script src="js/jquery/jquery-1.10.2.js"></script>
+    <script src="js/slider/zepto.js"></script>
+    <script src="js/slider/islider.js"></script>
+    <script src="js/where_more.js"></script>
+</head>
+<body>
+
+<div style="display:none;">
+    <a id="label_a" href="javascript:" class="nav">
+        <div class="h4">潜水</div>
+    </a>
+    <a id="label_more_a" href="javascript:" class="nav toggle" onclick="this.parentNode.classList.toggle('expended')">
+        <i class="i iG iG_more"></i>
+    </a>
+    <a id="club_a" href="javascript:void(0);" class="club">
+        <div class="avat"><div class="img round_img"><img src="img/uavat.jpg" alt=""></div></div>
+        <div class="uname text_overflow">剑元上至</div>
+        <div class="popular">2万人关注</div>
+    </a>
+    <div id="activity" class="club_brand">
+        <a href="javascript:void(0);" class="club_owner">
+            <div class="avat"><div class="img round_img"><img src="img/uavat.jpg" alt=""></div></div>
+            <div class="uname text_overflow">新蜂女子车队训练基地</div>
+        </a>
+
+        <a href="javascript:void(0);" class="activity_brand">
+            <i class="i iA iA_middle iA_right iA_white"></i>
+            <div class="cover"><div class="bg" style="background-image:url(img/cover.jpg)"></div></div>
+            <div class="card">
+                <div class="title">冰雪女王的盛宴踮着脚尖划过这一片安静的原野</div>
+                <div class="info">
+                    <div class="inf fense">￥258</div>
+                    <div class="inf tip">特价</div>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+<div class="expand_navs">
+    <div id="labelList" class="expand_navs_wrap cfix">x
+    </div>
+</div>
+
+<div id="clubList" class="home_block">
+    <div class="home_block_title">
+        <div class="h2"><i class="i iG iG_flag"></i>俱乐部</div>
+    </div>
+    <div class="home_block_content">
+        <div class="club_list_slider">
+            <div class="slider" id="club_list_slider_content" class="club_list_slider_content"></div>
+            <div class="slider_pages" id="club_list_slider_pages"></div>
+        </div>
+    </div>
+</div>
+
+<div id="activityList" class="home_block">
+    <div class="home_block_title">
+        <div class="h2"><i class="i iG iG_rocket"></i>活动</div>
+    </div>
+    <div class="home_block_content">
+        <div id="activityContent" class="club_brand_list cfix">
+            <div class="club_brand" style="visibility:hidden;">
+                <a href="javascript:void(0);" class="club_owner">
+                    <div class="avat"><div class="img round_img"><img src="img/uavat.jpg" alt=""></div></div>
+                    <div class="uname text_overflow">新蜂女子车队训练基地</div>
+                </a>
+
+                <a href="javascript:void(0);" class="activity_brand">
+                    <i class="i iA iA_middle iA_right iA_white"></i>
+                    <div class="cover"><div class="bg" style="background-image:url(img/cover.jpg)"></div></div>
+                    <div class="card">
+                        <div class="title">冰雪女王的盛宴踮着脚尖划过这一片安静的原野</div>
+                        <div class="info">
+                            <div class="inf fense">￥258</div>
+                            <div class="inf tip">特价</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

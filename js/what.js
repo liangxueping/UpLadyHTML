@@ -404,8 +404,17 @@ function initUserList(jsonData){
                     var $imageA =$('#user_image_a').clone().appendTo($dom.find('.imageList'));
                     $imageA.find("img").attr("src", userImage.smallImage);
                     $imageA.click(function(){
-                        $imgZoomer.find('img').attr('src',userImage.middleImage);
-                        $imgZoomer.fadeIn();
+                        var appData = {};
+                        appData.data = userImage;
+                        if(window.Android){
+                            appData.method = "com.uplady.teamspace.home.DynamicDetailAcitity";
+                            Android.openWindow(JSON.stringify(appData));
+                        }else if(iOS){
+                            appData.method = "NBDynamicDetailsViewController";
+                            iOS.callHandler('openWindow', JSON.stringify(appData), function (response) {});
+                        }else {
+                            console.error("APP未注册JavaScript方法 openWindow");
+                        }
                     });
                 });
             }
@@ -461,10 +470,12 @@ function initActivityList(jsonData){
 //初始化 俱乐部列表
 var dataClubList;
 function initClubList(jsonData){
-    var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
-    dataClubList = data;
-    var dataList = data.list;
+    var params = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
+    dataClubList = params;
+    var dataList = params.list;
+    $('#club_list_slider_content').empty();
     if(dataList && dataList.length > 0){
+        $("#clubList").show();
         var data = [];
         var $div = $('<div id="tempDiv"></div>');
         //dataList = dataList.concat(dataList);
@@ -529,7 +540,14 @@ function clickClub(jsonData){
     //页面获取数据时使用的参数
     webViewData.params = data;
     //右侧按钮对象
-    webViewData.rightButton = {};
+    webViewData.rightButton = {
+        title: "帐号信息",
+        icon: 0,
+        eventType: 0,
+        url: BASE_URL+"club_info.html",
+        params: data,
+        rightButton: {}
+    };
 
     if(window.Android){
         Android.loadURL(JSON.stringify(webViewData));

@@ -6,7 +6,7 @@
  */
 var BASE_URL = "http://192.168.1.103:8080/UpLady/";
 var AJAX_URL = 'http://www.uplady.cn/nbsc/';
-var TOKEN = "e88a33d910378c7dcb32ce8b3eef2afb";
+var TOKEN = "d8ac0fa2cf1f20cbbed03b569b98a89e";
 var VERSION = "1.0.0";
 var TYPE = "HTML";
 var GET = 'GET';

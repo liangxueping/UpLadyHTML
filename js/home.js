@@ -141,19 +141,13 @@ function initLWhat(labels){
                 var params = elem;
                 var webViewData = {};
                 //标题名
-                webViewData.title = "活动详情";
+                webViewData.title = params.labelTitle;
                 //WebView跳转的地址
                 webViewData.url = BASE_URL+"home_what.html";
                 //页面获取数据时使用的参数
                 webViewData.params = params;
                 //右侧按钮对象
-                webViewData.rightButton = {
-                    title: "项目",
-                    icon: 0,
-                    eventType: 0,
-                    url: BASE_URL+"home_what_more.html",
-                    rightButton: {}
-                };
+                webViewData.rightButton = {};
                 var appData = {};
                 appData.data = webViewData;
                 if(window.Android){
@@ -225,6 +219,30 @@ function initWho(explores){
         });
         if(explores.length < 6){
             $('#home_who_footer').hide();
+        }else {
+            $('#home_who_footer').click(function(){
+                var params = {};
+                var webViewData = {};
+                //标题名
+                webViewData.title = "达人";
+                //WebView跳转的地址
+                webViewData.url = BASE_URL+"home_who_more.html";
+                //页面获取数据时使用的参数
+                webViewData.params = params;
+                //右侧按钮对象
+                webViewData.rightButton = {};
+                var appData = {};
+                appData.data = webViewData;
+                if(window.Android){
+                    appData.method = "com.uplady.teamspace.search.WebViewActivity";
+                    Android.openWindow(JSON.stringify(appData));
+                }else if(iOS){
+                    appData.method = "NBPublicWebViewController";
+                    iOS.callHandler('openWindow', JSON.stringify(appData), function (response) {});
+                }else {
+                    console.error("APP未注册JavaScript方法，跳转地址："+webViewData.url);
+                }
+            });
         }
     }
 }
@@ -249,7 +267,14 @@ function initClub(clubs){
                 //页面获取数据时使用的参数
                 webViewData.params = params;
                 //右侧按钮对象
-                webViewData.rightButton = {};
+                webViewData.rightButton = {
+                    title: "帐号信息",
+                    icon: 0,
+                    eventType: 0,
+                    url: BASE_URL+"club_info.html",
+                    params: params,
+                    rightButton: {}
+                };
                 var appData = {};
                 appData.data = webViewData;
                 if(window.Android){
@@ -304,6 +329,30 @@ function initLWhere(activities){
         });
         if(activities.length < 6){
             $('#home_where_footer').hide();
+        }else {
+            $('#home_where_footer').click(function(){
+                var params = {};
+                var webViewData = {};
+                //标题名
+                webViewData.title = "活动";
+                //WebView跳转的地址
+                webViewData.url = BASE_URL+"home_where_more.html";
+                //页面获取数据时使用的参数
+                webViewData.params = params;
+                //右侧按钮对象
+                webViewData.rightButton = {};
+                var appData = {};
+                appData.data = webViewData;
+                if(window.Android){
+                    appData.method = "com.uplady.teamspace.search.WebViewActivity";
+                    Android.openWindow(JSON.stringify(appData));
+                }else if(iOS){
+                    appData.method = "NBPublicWebViewController";
+                    iOS.callHandler('openWindow', JSON.stringify(appData), function (response) {});
+                }else {
+                    console.error("APP未注册JavaScript方法，跳转地址："+webViewData.url);
+                }
+            });
         }
     }
 }

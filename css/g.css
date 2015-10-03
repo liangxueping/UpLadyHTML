@@ -465,7 +465,7 @@ html {
   height: 38px;
   line-height: 40px;
 }
-.expand_navs .nav .active {
+.expand_navs .nav.active {
   padding-bottom: 0;
   border-bottom: 2px solid #FFD800;
 }

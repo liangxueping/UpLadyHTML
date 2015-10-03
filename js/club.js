@@ -109,9 +109,9 @@ function initUserInfo(jsonData){
     console.log(data);
     var userData = data.user_info;
 
-    //$("#userinfo").find(".bg").css({
-    //    'background-image': 'url('+userData.labelBgImg+')'
-    //});
+    $("#userinfo").find(".bg").css({
+        'background-image': 'url('+userData.userIcon+')'
+    });
     $("#userinfo").find("img").attr("src", userData.userIcon);
     $("#userinfo").find(".uname").html(userData.userName);
     $("#userinfo").find(".sign").html(userData.userDes);
