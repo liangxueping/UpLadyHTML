@@ -20,6 +20,15 @@ var TYPE = "HTML";
 //数据提交类型
 var GET = 'GET';
 var POST = 'POST';
+//获取微信数据使用的对象
+var WX_URL = "https://api.weixin.qq.com/sns/";
+var METHOD_ACCESS_TOKEN = "oauth2/access_token";
+var METHOD_USER_INFO = "userinfo";
+var appid = "wxd44769f1ded9fa98";
+var secret = "5a248f5cca273304f0835e6451c30e88";
+var grant_type = "authorization_code";
+var lang = "zh_CN";
+
 //ios设备，接口回调对象
 var iOS;
 function connectWebViewJavascriptBridge(callback) {
@@ -30,4 +39,10 @@ function connectWebViewJavascriptBridge(callback) {
             callback(WebViewJavascriptBridge)
         }, false)
     }
+}
+//获取url中的参数
+function getUrlParam(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+    var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+    if (r != null) return unescape(r[2]); return null; //返回参数值
 }

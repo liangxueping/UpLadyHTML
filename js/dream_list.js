@@ -56,7 +56,7 @@ function initJS(){
 //初始化 梦想项目
 function initDreamList(jsonData){
     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
-
+    var userInfo = data.user_info;
     $("#addMore").click(function(){
         var params = {};
         var webViewData = {};
@@ -80,18 +80,31 @@ function initDreamList(jsonData){
             console.error("APP未注册JavaScript方法，跳转地址："+webViewData.url);
         }
     });
-    var userInfo = data.user_info;
     $("#raiseMoney").click(function(){
+
+        var SHARE_URL = "https://open.weixin.qq.com/connect/oauth2/authorize";
+        var redirect_uri = BASE_URL+"/dream_detail.html?userId=";
+        var response_type = "code";
+        var scope = "snsapi_userinfo";
+
+        redirect_uri = encodeURIComponent(redirect_uri+userInfo.userId);
+        var url = SHARE_URL;
+        url += "?appid="+appid;
+        url += "&redirect_uri="+redirect_uri;
+        url += "&response_type="+response_type;
+        url += "&scope="+scope;
+        url += "#wechat_redirect";
+
         var shareData = {};
-        shareData.url = BASE_URL+"dream_list_share.html?userId="+userInfo.userId;
+        shareData.url = url;
         shareData.logo = userInfo.userIcon;
         shareData.title = userInfo.userName+"的梦想清单";
         shareData.content = userInfo.dreamWord;
 
         if(window.Android){
-            Android.share(JSON.stringify(appData));
+            Android.share(JSON.stringify(shareData));
         }else if(iOS){
-            iOS.callHandler('share', JSON.stringify(appData), function (response) {});
+            iOS.callHandler('share', JSON.stringify(shareData), function (response) {});
         }else {
             console.error("APP未注册JavaScript方法：分享");
         }
