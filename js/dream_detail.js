@@ -7,6 +7,9 @@ var access_token;
 var openid;
 var wxUserInfo;
 $(document).ready(function(){
+    if(wxUserInfo){
+        return;
+    }
     var userId = getUrlParam("userId");
     code = getUrlParam("code");
     if(code){
@@ -118,7 +121,7 @@ function initDreamList(jsonData){
     $("#help").click(function(){
         //获取梦想活动列表
         $.ajax({
-            type: GET,
+            type: POST,
             url: AJAX_URL+"dreamHelpAdd.do",
             data: {
                 userId: userId,

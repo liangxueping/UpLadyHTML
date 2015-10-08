@@ -81,9 +81,9 @@ function initDreamList(jsonData){
         }
     });
     $("#raiseMoney").click(function(){
-
         var SHARE_URL = "https://open.weixin.qq.com/connect/oauth2/authorize";
-        var redirect_uri = BASE_URL+"/dream_detail.html?userId=";
+        var redirect_uri = BASE_URL+"dream_detail.html?userId=";
+        //var redirect_uri = "http://www.uplady.cn/nbsc/html/dream_detail.html?userId=";
         var response_type = "code";
         var scope = "snsapi_userinfo";
 

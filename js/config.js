@@ -8,11 +8,11 @@
 //访问地址根目录
 var ROOT_RUL = "http://www.uplady.cn/";
 //HTML应用的访问地址
-var BASE_URL = "http://192.168.1.103:8080/UpLady/";
+var BASE_URL = "http://www.uplady.cn/nbsc/html/";
 //接口访问地址
 var AJAX_URL = ROOT_RUL+'nbsc/';
 //模拟操作时使用的临时TOKEN
-var TOKEN = "e4a75df3d09442301272636ede164cdb";
+var TOKEN = "247f1b652ccb1d1e6f238ea9be9f4eb4";
 //软件版本
 var VERSION = "1.0.0";
 //接口统计类型（自定义）
