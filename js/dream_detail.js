@@ -31,6 +31,9 @@ $(document).ready(function(){
         },
         error:function(msg) { console.log(msg)}
     });
+    getDreamHelpList();
+});
+function getDreamHelpList(){
     //获取梦想助力列表
     $.ajax({
         type: GET,
@@ -59,7 +62,7 @@ $(document).ready(function(){
         },
         error:function(msg) { console.log(msg)}
     });
-});
+}
 //获取微信认证权限access_token
 function getAccessToken(){
     var params = "";
@@ -121,14 +124,6 @@ function initDreamList(jsonData){
     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
     var userInfo = data.user_info;
     $("#help").click(function(){
-        alert("点击助力按钮");
-        alert("对象GET："+GET);
-        alert("对象AJAX_URL："+AJAX_URL);
-        alert("对象userId："+userId);
-        alert("对象wxUserInfo："+wxUserInfo);
-        alert("对象wxUserInfo.openid："+wxUserInfo.openid);
-        alert("对象wxUserInfo.nickname："+wxUserInfo.nickname);
-        alert("对象wxUserInfo.headimgurl："+wxUserInfo.headimgurl);
         //获取梦想活动列表
         $.ajax({
             type: GET,
@@ -141,22 +136,20 @@ function initDreamList(jsonData){
             },
             dataType : 'JSON',
             success: function(jsonData){
-                alert("返回值："+jsonData);
                 var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
                 if(data){
                     if(data.status == 100){
                         alert("助力成功！");
+                        getDreamHelpList();
                     }else {
                         alert("助力失败："+data.message);
                     }
                 }
             },
             error:function(msg) {
-                alert("错误："+JSON.stringify(msg));
                 console.log(msg)
             }
         });
-        alert("调用dreamHelpAdd接口");
     });
     $("#play").click(function(){
         window.location = ROOT_RUL;
