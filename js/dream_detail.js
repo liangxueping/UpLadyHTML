@@ -7,6 +7,7 @@ var code;
 var access_token;
 var openid;
 var wxUserInfo;
+var userInfo;
 $(document).ready(function(){
     if(wxUserInfo){
         return;
@@ -122,7 +123,7 @@ function getUserInfo(jsonData){
 //初始化 梦想项目
 function initDreamList(jsonData){
     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
-    var userInfo = data.user_info;
+    userInfo = data.user_info;
     $("#help").click(function(){
         //获取梦想活动列表
         $.ajax({
@@ -210,7 +211,7 @@ function initDreamHelpTotal(jsonData){
             feeValueClass = "minus";
             feeValue = "-"+data.feeValue;
         }
-        $(".total_info").html('共有'+data.userNum+'人帮李鹤助力了<span class="plus">'+feeValue+'梦想币</span>');
+        $(".total_info").html('共有'+data.userNum+'人帮'+userInfo.userName+'助力了<span class="plus">'+feeValue+'梦想币</span>');
     }else {
         $(".total_info").hide();
     }
