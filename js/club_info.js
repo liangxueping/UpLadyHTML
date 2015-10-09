@@ -120,7 +120,7 @@ function initClubDetail(jsonData){
 
     var service = clubDetail.service;
     if(service){
-        var serviceList = service.split("、");
+        var serviceList = service.split(",");
         var $ul;
         serviceList.forEach(function(elem, index){
             if(index % 5 == 0){

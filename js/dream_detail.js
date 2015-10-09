@@ -2,6 +2,7 @@
  * Created by liang on 2015/9/27.
  */
 document.write("<script src='js/config.js'></script>");
+var userId;
 var code;
 var access_token;
 var openid;
@@ -10,7 +11,7 @@ $(document).ready(function(){
     if(wxUserInfo){
         return;
     }
-    var userId = getUrlParam("userId");
+    userId = getUrlParam("userId");
     code = getUrlParam("code");
     if(code){
         getAccessToken();
@@ -80,14 +81,15 @@ function getAccessToken(){
         },
         error:function(msg) {
             console.log(msg);
-            alert("错误："+JSON.stringify(msg));
+            history.go(-1);
         }
     });
 }
 function getUserInfo(jsonData){
     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
     if(data.errmsg){
-        alert("错误："+data.errmsg);
+        //alert("错误："+data.errmsg);
+        history.go(-1);
         return;
     }
     access_token = data.access_token;
@@ -110,7 +112,7 @@ function getUserInfo(jsonData){
         },
         error:function(msg) {
             console.log(msg);
-            alert("错误："+JSON.stringify(msg));
+            history.go(-1);
         }
     });
 }
@@ -119,9 +121,17 @@ function initDreamList(jsonData){
     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
     var userInfo = data.user_info;
     $("#help").click(function(){
+        alert("点击助力按钮");
+        alert("对象GET："+GET);
+        alert("对象AJAX_URL："+AJAX_URL);
+        alert("对象userId："+userId);
+        alert("对象wxUserInfo："+wxUserInfo);
+        alert("对象wxUserInfo.openid："+wxUserInfo.openid);
+        alert("对象wxUserInfo.nickname："+wxUserInfo.nickname);
+        alert("对象wxUserInfo.headimgurl："+wxUserInfo.headimgurl);
         //获取梦想活动列表
         $.ajax({
-            type: POST,
+            type: GET,
             url: AJAX_URL+"dreamHelpAdd.do",
             data: {
                 userId: userId,
@@ -131,6 +141,7 @@ function initDreamList(jsonData){
             },
             dataType : 'JSON',
             success: function(jsonData){
+                alert("返回值："+jsonData);
                 var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
                 if(data){
                     if(data.status == 100){
@@ -140,8 +151,12 @@ function initDreamList(jsonData){
                     }
                 }
             },
-            error:function(msg) { console.log(msg)}
+            error:function(msg) {
+                alert("错误："+JSON.stringify(msg));
+                console.log(msg)
+            }
         });
+        alert("调用dreamHelpAdd接口");
     });
     $("#play").click(function(){
         window.location = ROOT_RUL;

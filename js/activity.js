@@ -128,6 +128,7 @@ function initActivityDetail(jsonData){
     $(".bg").css({
         'background-image': 'url('+activityDetail.clubLogo+')'
     });
+    $("#user_img").attr("src", activityDetail.clubLogo);
     $(".title").html(activityDetail.clubName);
     $(".description").html(activityDetail.clubDes);
     $("#activity_title").click(function(){

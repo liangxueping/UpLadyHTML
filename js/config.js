@@ -24,8 +24,8 @@ var POST = 'POST';
 var WX_URL = "https://api.weixin.qq.com/sns/";
 var METHOD_ACCESS_TOKEN = "oauth2/access_token";
 var METHOD_USER_INFO = "userinfo";
-var appid = "wxd44769f1ded9fa98";
-var secret = "5a248f5cca273304f0835e6451c30e88";
+var appid = "wx1a90f3a916cc7481";
+var secret = "ade4fa948ccac9ee35846fae4dbf73a3";
 var grant_type = "authorization_code";
 var lang = "zh_CN";
 

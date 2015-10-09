@@ -68,16 +68,20 @@ function initDreamList(jsonData){
         webViewData.params = params;
         //右侧按钮对象
         webViewData.rightButton = {};
+        var appData = {};
+        appData.data = webViewData;
         if(window.Android){
             Android.loadURL(JSON.stringify(webViewData));
         }else if(iOS){
-            iOS.callHandler('loadURL', JSON.stringify(webViewData), function (response) {});
+            appData.method = "NBPublicWebViewController";
+            iOS.callHandler('openWindow', JSON.stringify(appData), function (response) {});
         }else {
             console.error("APP未注册JavaScript方法，跳转地址："+webViewData.url);
         }
     });
     $("#raiseMoney").click(function(){
         var SHARE_URL = "https://open.weixin.qq.com/connect/oauth2/authorize";
+        //testwdtwap193.wowotuan.com
         var redirect_uri = BASE_URL+"dream_detail.html?userId=";
         //var redirect_uri = "http://www.uplady.cn/nbsc/html/dream_detail.html?userId=";
         var response_type = "code";
