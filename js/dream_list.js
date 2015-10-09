@@ -68,14 +68,10 @@ function initDreamList(jsonData){
         webViewData.params = params;
         //右侧按钮对象
         webViewData.rightButton = {};
-        var appData = {};
-        appData.data = webViewData;
         if(window.Android){
-            appData.method = "com.uplady.teamspace.search.WebViewActivity";
-            Android.openWindow(JSON.stringify(appData));
+            Android.loadURL(JSON.stringify(webViewData));
         }else if(iOS){
-            appData.method = "NBPublicWebViewController";
-            iOS.callHandler('openWindow', JSON.stringify(appData), function (response) {});
+            iOS.callHandler('loadURL', JSON.stringify(webViewData), function (response) {});
         }else {
             console.error("APP未注册JavaScript方法，跳转地址："+webViewData.url);
         }
