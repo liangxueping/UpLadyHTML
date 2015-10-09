@@ -140,7 +140,14 @@ function initActivityDetail(jsonData){
         //页面获取数据时使用的参数
         webViewData.params = activityDetail;
         //右侧按钮对象
-        webViewData.rightButton = {};
+        webViewData.rightButton = {
+            title: "帐号信息",
+            icon: 0,
+            eventType: 0,
+            url: BASE_URL+"club_info.html",
+            params: params,
+            rightButton: {}
+        };
 
         if(window.Android){
             Android.loadURL(JSON.stringify(webViewData));
