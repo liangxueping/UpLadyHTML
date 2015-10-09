@@ -109,7 +109,7 @@ function initDreamList(jsonData){
             console.error("APP未注册JavaScript方法：分享");
         }
     });
-
+    initTitleImage(userInfo.dreamBackPicList);
     $(".avat").find("img").attr("src", userInfo.userIcon);
     $(".uname").html("我是"+userInfo.userName);
     $(".sign").html(userInfo.dreamWord);
@@ -147,6 +147,30 @@ function initDreamList(jsonData){
                     console.error("APP未注册JavaScript方法，跳转地址："+webViewData.url);
                 }
             });
+        });
+    }
+}
+//初始化头部背景图
+var titleImgIndex = 0;
+function initTitleImage(dreamBackPicList){
+    if(dreamBackPicList && dreamBackPicList.length > 0){
+        var imgUrl = dreamBackPicList[titleImgIndex%dreamBackPicList.length].picUrl;
+        titleImgIndex++;
+        console.log(imgUrl);
+        $("#title_image").css({
+            opacity: 0,
+            "background-image": 'url('+imgUrl+')'
+        });
+        $("#title_image").animate({
+            opacity: 1
+        }, "slow", function(){
+            setTimeout(function(){
+                $("#title_image").animate({
+                    opacity: 0
+                }, "slow", function(){
+                    initTitleImage(dreamBackPicList);
+                });
+            }, 3000);
         });
     }
 }

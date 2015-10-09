@@ -20,8 +20,9 @@ $(document).ready(function(){
     //获取梦想活动列表
     $.ajax({
         type: GET,
-        url: AJAX_URL+"dreamList.do",
+        url: AJAX_URL+"dreamList.do?callback=?",
         data: {
+            accessSource: ACCESS_SOURCE,
             userId: userId,
             page: 1,
             size: 999
@@ -38,8 +39,9 @@ function getDreamHelpList(){
     //获取梦想助力列表
     $.ajax({
         type: GET,
-        url: AJAX_URL+"dreamHelpList.do",
+        url: AJAX_URL+"dreamHelpList.do?callback=?",
         data: {
+            accessSource: ACCESS_SOURCE,
             userId: userId,
             page: 1,
             size: 999
@@ -50,11 +52,17 @@ function getDreamHelpList(){
         },
         error:function(msg) { console.log(msg)}
     });
+}
+function getDreamHelpTotal(){
+    if(!userInfo){
+        return;
+    }
     //获取梦想助力统计信息
     $.ajax({
         type: GET,
-        url: AJAX_URL+"dreamHelpTotal.do",
+        url: AJAX_URL+"dreamHelpTotal.do?callback=?",
         data: {
+            accessSource: ACCESS_SOURCE,
             userId: userId
         },
         dataType : 'JSON',
@@ -124,12 +132,14 @@ function getUserInfo(jsonData){
 function initDreamList(jsonData){
     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
     userInfo = data.user_info;
+    getDreamHelpTotal();
     $("#help").click(function(){
         //获取梦想活动列表
         $.ajax({
             type: GET,
-            url: AJAX_URL+"dreamHelpAdd.do",
+            url: AJAX_URL+"dreamHelpAdd.do?callback=?",
             data: {
+                accessSource: ACCESS_SOURCE,
                 userId: userId,
                 openid: wxUserInfo.openid,
                 wxUserName: wxUserInfo.nickname,
@@ -142,6 +152,7 @@ function initDreamList(jsonData){
                     if(data.status == 100){
                         alert("助力成功！");
                         getDreamHelpList();
+                        getDreamHelpTotal();
                     }else {
                         alert("助力失败："+data.message);
                     }
@@ -155,7 +166,7 @@ function initDreamList(jsonData){
     $("#play").click(function(){
         window.location = ROOT_RUL;
     });
-
+    initTitleImage(userInfo.dreamBackPicList);
     $("#userinfo").find("img").attr("src", userInfo.userIcon);
     $(".uname").html("我是"+userInfo.userName);
     $(".sign").html(userInfo.dreamWord);
@@ -173,12 +184,38 @@ function initDreamList(jsonData){
         });
     }
 }
+//初始化头部背景图
+var titleImgIndex = 0;
+function initTitleImage(dreamBackPicList){
+    if(dreamBackPicList && dreamBackPicList.length > 0){
+        var imgUrl = dreamBackPicList[titleImgIndex%dreamBackPicList.length].picUrl;
+        titleImgIndex++;
+        console.log(imgUrl);
+        $("#title_image").css({
+            opacity: 0,
+            "background-image": 'url('+imgUrl+')'
+        });
+        $("#title_image").animate({
+            opacity: 1
+        }, "slow", function(){
+            setTimeout(function(){
+                $("#title_image").animate({
+                    opacity: 0
+                }, "slow", function(){
+                    initTitleImage(dreamBackPicList);
+                });
+            }, 3000);
+        });
+    }
+}
+
 //初始化 助力列表
 function initHelpers(jsonData){
     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
     var dataList = data.list;
     $('#dreamListHelpers').empty();
     if(dataList && dataList.length > 0){
+        $(".dreamListHelpers").show();
         dataList.forEach(function(elem){
             var $dom =$('#dream_list_helper').clone().appendTo('#dreamListHelpers');
             $dom.find("img").attr("src", elem.wxUserIcon);
@@ -202,6 +239,7 @@ function initHelpers(jsonData){
 function initDreamHelpTotal(jsonData){
     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
     if(data.userNum && data.userNum > 0){
+        $(".total_info").show();
         var feeValue = "";
         var feeValueClass = "";
         if(data.feeValue > 0){

@@ -75,6 +75,13 @@ function initJS(){
 //初始化页面
 var activityDetail;
 function initActivityDetail(jsonData){
+    while(typeof jsonData == 'string' && jsonData.indexOf("\r") != -1){
+        jsonData = jsonData.replace("\r", "");
+    }
+
+    while(typeof jsonData == 'string' && jsonData.indexOf("\n") != -1){
+        jsonData = jsonData.replace("\n", "");
+    }
     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
     activityDetail = data.activity;
     console.log(activityDetail);

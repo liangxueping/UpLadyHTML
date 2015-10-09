@@ -8,7 +8,8 @@
 //访问地址根目录
 var ROOT_RUL = "http://www.uplady.cn/";
 //HTML应用的访问地址
-var BASE_URL = "http://www.uplady.cn/nbsc/html/";
+//var BASE_URL = "http://www.uplady.cn/nbsc/html/";
+var BASE_URL = "http://192.168.1.7:8080/UpLady/";
 //接口访问地址
 var AJAX_URL = ROOT_RUL+'nbsc/';
 //模拟操作时使用的临时TOKEN
@@ -28,6 +29,7 @@ var appid = "wx1a90f3a916cc7481";
 var secret = "ade4fa948ccac9ee35846fae4dbf73a3";
 var grant_type = "authorization_code";
 var lang = "zh_CN";
+var ACCESS_SOURCE = 1;
 
 //ios设备，接口回调对象
 var iOS;

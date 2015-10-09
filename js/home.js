@@ -3,6 +3,7 @@
  */
 document.write("<script src='js/config.js'></script>");
 $(document).ready(function(){
+    $(".home_block").hide();
     //注册iOS方法
     connectWebViewJavascriptBridge(function (bridge) {
         iOS = bridge;
@@ -20,8 +21,14 @@ $(document).ready(function(){
 });
 //App 通知 HTML 初始化的方法
 function initJS(){
+    var params = {
+        type: 2,
+        page: 1,
+        size: 6
+    };
     if(window.Android){
         Android.getData(AJAX_URL+"discovery.do", GET, '', 'initData');
+        Android.getData(AJAX_URL+"getLabels.do", GET, JSON.stringify(params), 'initLWhat');
     }else if(iOS){
         iOS.callHandler('getData', {
             url: AJAX_URL+"discovery.do",
@@ -31,30 +38,47 @@ function initJS(){
         }, function (response) {
             initData(response);
         });
+        iOS.callHandler('getData', {
+            url: AJAX_URL+"getLabels.do",
+            method: GET,
+            params: JSON.stringify(params),
+            callBack: 'initData'
+        }, function (response) {});
     }else{
         console.log("Android iOS 没有实现接口，HTML自己获取数据！");
-        //$.ajax({
-        //    type: GET,
-        //    url: AJAX_URL+"discovery.do",
-        //    data: {},
-        //    dataType : 'JSON',
-        //    success: function(result){
-        //        initData(result);
-        //    },
-        //    error:function(msg) { console.log(msg)}
-        //});
+        $.ajax({
+            type: GET,
+            url: AJAX_URL+"discovery.do",
+            data: {},
+            dataType : 'JSON',
+            success: function(result){
+                initData(result);
+            },
+            error:function(msg) { console.log(msg)}
+        });
+        $.ajax({
+            type: GET,
+            url: AJAX_URL+"getLabels.do",
+            data: params,
+            dataType : 'JSON',
+            success: function(result){
+                initLWhat(result);
+            },
+            error:function(msg) { console.log(msg)}
+        });
     }
 }
 
 //初始化方法
 function initData(jsonData){
+    $(".home_block").show();
     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
     if(data == null || data.status != 100){
         return;
     }
     console.log(data);
     initSlider(data.ads);
-    initLWhat(data.labels);
+    //initLWhat(data.labels);
     initWho(data.explores);
     initClub(data.clubs);
     initLWhere(data.activities);
@@ -125,7 +149,9 @@ function initSlider(ads){
 }
 
 //初始化 玩什么
-function initLWhat(labels){
+function initLWhat(jsonData){
+    var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
+    var labels = data.list;
     if(!labels || labels.length == 0){
         $('#home_what').hide();
     }else {
@@ -389,6 +415,30 @@ function initLLabel(labels){
         });
         if(labels.length < 6){
             $('#home_label_footer').hide();
+        }else {
+            $('#home_label_footer').click(function(){
+                var params = {};
+                var webViewData = {};
+                //标题名
+                webViewData.title = "标签";
+                //WebView跳转的地址
+                webViewData.url = BASE_URL+"home_label_more.html";
+                //页面获取数据时使用的参数
+                webViewData.params = params;
+                //右侧按钮对象
+                webViewData.rightButton = {};
+                var appData = {};
+                appData.data = webViewData;
+                if(window.Android){
+                    appData.method = "com.uplady.teamspace.search.WebViewActivity";
+                    Android.openWindow(JSON.stringify(appData));
+                }else if(iOS){
+                    appData.method = "NBPublicWebViewController";
+                    iOS.callHandler('openWindow', JSON.stringify(appData), function (response) {});
+                }else {
+                    console.error("APP未注册JavaScript方法，跳转地址："+webViewData.url);
+                }
+            });
         }
     }
 }
