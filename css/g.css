@@ -470,6 +470,9 @@ html {
   padding-bottom: 2px;
   height: 38px;
   line-height: 40px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .expand_navs .nav.active {
   padding-bottom: 0;
@@ -481,6 +484,9 @@ html {
 .expand_navs .nav .h4 {
   font-size: 16px;
   color: #484848;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 /* \5E26brand\5934\90E8\7684page\7684\5BFC\822A\680F\7ED3\6784£¬\6C34\5E73\6392\5217 */
 .page_navs {

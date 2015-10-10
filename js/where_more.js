@@ -40,6 +40,22 @@ function initJS(){
             function (response) {});
     }else {
         console.error("Android iOS 没有实现getData接口！");
+        $.ajax({
+            type: GET,
+            url: AJAX_URL+"recommendLabel.do",
+            data: {
+                token: TOKEN,
+                labelId: 4,
+                ifSubject: 1,
+                type: TYPE,
+                version: "1.1.1"
+            },
+            dataType : 'JSON',
+            success: function(result){
+                initRecommendLabel(result);
+            },
+            error:function(msg) { console.log(msg)}
+        });
     }
 }
 //初始化 梦想项目

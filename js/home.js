@@ -17,6 +17,9 @@ $(document).ready(function(){
         bridge.registerHandler('initData', function (data, responseCallback) {
             initData(data);
         });
+        bridge.registerHandler('initLWhat', function (data, responseCallback) {
+            initLWhat(data);
+        });
     });
 });
 //App 通知 HTML 初始化的方法
@@ -38,12 +41,6 @@ function initJS(){
         }, function (response) {
             initData(response);
         });
-        iOS.callHandler('getData', {
-            url: AJAX_URL+"getLabels.do",
-            method: GET,
-            params: JSON.stringify(params),
-            callBack: 'initData'
-        }, function (response) {});
     }else{
         console.log("Android iOS 没有实现接口，HTML自己获取数据！");
         $.ajax({
@@ -83,6 +80,19 @@ function initData(jsonData){
     initClub(data.clubs);
     initLWhere(data.activities);
     initLLabel(data.labels);
+    if(iOS){
+        var params = {
+            type: 2,
+            page: 1,
+            size: 6
+        };
+        iOS.callHandler('getData', {
+            url: AJAX_URL+"getLabels.do",
+            method: GET,
+            params: JSON.stringify(params),
+            callBack: 'initLWhat'
+        }, function (response) {});
+    }
 }
 //初始化 轮播图
 function initSlider(ads){

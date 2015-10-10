@@ -201,6 +201,10 @@ function initLabelDetail(jsonData){
     }
     console.log("获取梦想标签：");
     console.log(data);
+
+    $("#labelBackground").css({
+        "background-image": 'url('+labelDetail.labelBgImg+')'
+    });
     $("#labelTitle").html(data.labelDetail.labelTitle);
     $("#labelDes").html(data.labelDetail.labelDes);
     $("#userNum").html(data.labelDetail.userNum);
