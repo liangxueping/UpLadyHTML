@@ -36,7 +36,7 @@ function getRecommendLabel(){
     var METHOD_URL = AJAX_URL+"recommendLabel.do";
     var CALL_BACK = "initRecommendLabel";
     var data = {
-        page: page,
+        page: 1,
         size: SIZE
     };
     if(window.Android){
