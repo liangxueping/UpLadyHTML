@@ -37,26 +37,6 @@ $(document).ready(function(){
 
 
     });
-    $imgZoomer = $('<div>').css({
-        'position': 'absolute',
-        'top': '0',
-        'left': '0',
-        'width': '100%',
-        'height': '100%',
-        'background': 'rgba(0,0,0,0.5)',
-        'display': 'none',
-        'z-index':999
-    }).html('<div style="display: table;table-layout: fixed;width: 100%;height: 100%">' +
-        '<div style="display: table-cell;vertical-align: middle;width: 100%;text-align: center;overflow: auto">' +
-        '<img src="">' +
-        '</div></div>').on('touchstart',function(){
-        isMove = false;
-    }).on('touchmove',function(){
-        isMove = true;
-    }).on('touchend',function(e){
-        isMove || $(this).fadeOut();
-        isMove = false;
-    }).appendTo('body');
 });
 //App 通知 HTML 初始化的方法
 var params;
@@ -115,6 +95,20 @@ function initJS(){
         //});
         //getUserListData(params);
     }
+    $("#what_user_a").click(function (){
+        if(!$("#what_user_a").hasClass("active")){
+            $("#what_activity_a").removeClass("active");
+            $("#what_user_a").addClass("active");
+            getUserListData();
+        }
+    });
+    $("#what_activity_a").click(function (){
+        if(!$("#what_activity_a").hasClass("active")){
+            $("#what_user_a").removeClass("active");
+            $("#what_activity_a").addClass("active");
+            getActivityListData();
+        }
+    });
 }
 //获取 达人列表数据
 function getUserListData(){
@@ -180,21 +174,6 @@ function getActivityListData(){
 //初始化 标题头
 function initLabelDetail(jsonData){
     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
-
-    $("#what_user_a").click(function (){
-        if(!$("#what_user_a").hasClass("active")){
-            $("#what_activity_a").removeClass("active");
-            $("#what_user_a").addClass("active");
-            getUserListData();
-        }
-    });
-    $("#what_activity_a").click(function (){
-        if(!$("#what_activity_a").hasClass("active")){
-            $("#what_user_a").removeClass("active");
-            $("#what_activity_a").addClass("active");
-            getActivityListData();
-        }
-    });
 
     if(!data.labelDetail){
         return;

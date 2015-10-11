@@ -374,7 +374,7 @@ iSlider.prototype._bindHandler = function () {
     };
 
     var moveHandler = function (evt) {
-        //evt.preventDefault();
+        evt.preventDefault();
         self.onslide && self.onslide();
         self.log('Event: onslide');
 
@@ -397,7 +397,7 @@ iSlider.prototype._bindHandler = function () {
     };
 
     var endHandler = function (evt) {
-        //evt.preventDefault();
+        evt.preventDefault();
 
         var boundary = self.scale / 2;
         var metric = self.offset;

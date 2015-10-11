@@ -29,11 +29,15 @@ $(document).ready(function(){
 });
 //初始化
 function initJS(){
+    getRecommendLabel();
+}
+
+function getRecommendLabel(){
     var METHOD_URL = AJAX_URL+"recommendLabel.do";
     var CALL_BACK = "initRecommendLabel";
     var data = {
-        page: 1,
-        size: 999
+        page: page,
+        size: SIZE
     };
     if(window.Android){
         Android.getData(METHOD_URL, GET, JSON.stringify(data), CALL_BACK);
@@ -57,11 +61,13 @@ function initRecommendLabel(jsonData){
             $dom.click(function(){
                 $dom.siblings().removeClass("active");
                 $dom.addClass("active");
-                getUserListData(elem);
+                currentType = elem;
+                getUserListData();
             });
             if(index == 0){
                 $dom.addClass("active");
-                getUserListData(elem);
+                currentType = elem;
+                getUserListData();
             }else if(index == 3){
                 $('#label_more_a').clone().appendTo('#labelList');
             }
@@ -69,8 +75,9 @@ function initRecommendLabel(jsonData){
     }
 }
 //初始化 达人列表
-function getUserListData(jsonData){
-    var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
+var currentType;
+function getUserListData(){
+    var data = typeof currentType == 'string' ? JSON.parse(currentType) : currentType;
     var METHOD_URL = AJAX_URL+"recommendUser.do";
     var CALL_BACK = "initUserList";
     var data = {

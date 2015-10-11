@@ -199,7 +199,10 @@ function initUserInfo(jsonData){
         if(!activityList){
             var METHOD_URL = AJAX_URL+"activityList.do";
             var CALL_BACK = "initActivityList";
-            var data = {};
+            var data = {
+                page: 1,
+                size: 9999
+            };
             data.clubId = params.clubId;
             //data.clubId = 3;
             if(window.Android){

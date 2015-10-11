@@ -23,15 +23,30 @@ $(document).ready(function(){
             delFavoriteLable(data);
         });
     });
+
+    $(window).scroll(function(){
+        if(!nextpage || nextpage == 0){
+            return;
+        }
+        var bodyHeight = $("body").height();
+        var bodyTop = $("body").scrollTop();
+        var clientHeight = document.documentElement.clientHeight;
+        if(bodyHeight > clientHeight && bodyHeight - bodyTop <= clientHeight){
+            page++;
+            initJS();
+        }
+    })
 });
 //初始化
+var page = 1;
+var nextpage;
 function initJS(){
     var METHOD_URL = AJAX_URL+"getLabels.do";
     var CALL_BACK = "initRecommendLabel";
     var data = {
         type: 2,
-        page: 1,
-        size: 999
+        page: page,
+        size: SIZE
     };
     if(window.Android){
         Android.getData(METHOD_URL, GET, JSON.stringify(data), CALL_BACK);
@@ -41,13 +56,26 @@ function initJS(){
             function (response) {});
     }else {
         console.error("Android iOS 没有实现getData接口！");
+        //$.ajax({
+        //    type: GET,
+        //    url: METHOD_URL,
+        //    data: data,
+        //    dataType : 'JSON',
+        //    success: function(result){
+        //        initRecommendLabel(result);
+        //    },
+        //    error:function(msg) { console.log(msg)}
+        //});
     }
 }
 //初始化 梦想项目
 function initRecommendLabel(jsonData){
     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
     var dataList = data.list;
-    $('#labelList').empty();
+    nextpage = data.nextpage;
+    if(page == 1){
+        $('#labelList').empty();
+    }
     if(dataList && dataList.length > 0){
         dataList.forEach(function(elem){
             var $dom =$('#label_a').clone().appendTo('#labelList');
