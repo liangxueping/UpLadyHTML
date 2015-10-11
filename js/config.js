@@ -8,8 +8,8 @@
 //访问地址根目录
 var ROOT_RUL = "http://www.uplady.cn/";
 //HTML应用的访问地址
-var BASE_URL = "http://www.uplady.cn/nbsc/html/";
-//var BASE_URL = "http://192.168.1.7:8080/UpLady/";
+//var BASE_URL = "http://www.uplady.cn/nbsc/html/";
+var BASE_URL = "http://192.168.1.7:8080/UpLady/";
 //接口访问地址
 var AJAX_URL = ROOT_RUL+'nbsc/';
 //模拟操作时使用的临时TOKEN
