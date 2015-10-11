@@ -182,7 +182,7 @@ function initLabelDetail(jsonData){
     console.log(data);
 
     $("#labelBackground").css({
-        "background-image": 'url('+labelDetail.labelBgImg+')'
+        "background-image": 'url('+data.labelDetail.labelBgImg+')'
     });
     $("#labelTitle").html(data.labelDetail.labelTitle);
     $("#labelDes").html(data.labelDetail.labelDes);
