@@ -24,10 +24,10 @@ $(document).ready(function(){
             delFavoriteActivity(data);
         });
     });
-    activityId = getUrlParam("activityId");
-    if(activityId){
-        initJS();
-    }
+    //activityId = getUrlParam("activityId");
+    //if(activityId){
+    //    initJS();
+    //}
 });
 //初始化
 var params;
