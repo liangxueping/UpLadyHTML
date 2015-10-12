@@ -33,11 +33,12 @@ function initJS(){
 }
 
 function getRecommendLabel(){
-    var METHOD_URL = AJAX_URL+"recommendLabel.do";
+    var METHOD_URL = AJAX_URL+"getLabels.do";
     var CALL_BACK = "initRecommendLabel";
     var data = {
+        type: 2,
         page: 1,
-        size: SIZE
+        size: 999
     };
     if(window.Android){
         Android.getData(METHOD_URL, GET, JSON.stringify(data), CALL_BACK);
@@ -47,18 +48,16 @@ function getRecommendLabel(){
             function (response) {});
     }else {
         console.error("Android iOS 没有实现getData接口！");
-        //$.ajax({
-        //    type: GET,
-        //    url: METHOD_URL,
-        //    data: {
-        //        labelId: 3
-        //    },
-        //    dataType : 'JSON',
-        //    success: function(result){
-        //        initRecommendLabel(result);
-        //    },
-        //    error:function(msg) { console.log(msg)}
-        //});
+        $.ajax({
+            type: GET,
+            url: METHOD_URL,
+            data: data,
+            dataType : 'JSON',
+            success: function(result){
+                initRecommendLabel(result);
+            },
+            error:function(msg) { console.log(msg)}
+        });
     }
 }
 //初始化 梦想项目
@@ -71,14 +70,17 @@ function initRecommendLabel(jsonData){
             var $dom =$('#label_a').clone().appendTo('#labelList');
             $dom.find(".h4").html(elem.labelTitle);
             $dom.click(function(){
+                currentType = elem;
                 $dom.siblings().removeClass("active");
                 $dom.addClass("active");
-                currentType = elem;
+                if($(this.parentNode).hasClass("expended")){
+                    this.parentNode.classList.toggle('expended');
+                }
                 getUserListData();
             });
             if(index == 0){
-                $dom.addClass("active");
                 currentType = elem;
+                $dom.addClass("active");
                 getUserListData();
             }else if(index == 3){
                 $('#label_more_a').clone().appendTo('#labelList');

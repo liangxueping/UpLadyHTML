@@ -65,6 +65,10 @@ function initRecommendLabel(jsonData){
             $dom.click(function(){
                 $dom.siblings().removeClass("active");
                 $dom.addClass("active");
+
+                if($(this.parentNode).hasClass("expended")){
+                    this.parentNode.classList.toggle('expended');
+                }
                 getActivityListData(elem);
             });
             if(index == 0){

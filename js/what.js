@@ -67,33 +67,33 @@ function initJS(){
         });
     }else{
         console.log("Android iOS 没有实现接口，HTML自己获取数据！");
-        //params = {
-        //    "labelId": 3,
-        //    "labelTitle": "攀岩",
-        //    "labelImg": "http://www.uplady.cn:8080/nbsc_image/images/label/5/1436085778801.jpg",
-        //    "labelBgImg": "http://www.uplady.cn:8080/nbsc_image/images/label/5/1436085778801.jpg",
-        //    "labelDes": "攀岩标签",
-        //    "fansNum": 11,
-        //    "ifFavorite": false
-        //};
-        //$.ajax({
-        //    type: GET,
-        //    url: AJAX_URL+"labelDetail.do",
-        //    data: {
-        //        token: TOKEN,
-        //        labelId: params.labelId,
-        //        ifSubject: 1,
-        //        type: TYPE,
-        //        version: "1.1.1"
-        //    },
-        //    dataType : 'JSON',
-        //    success: function(result){
-        //        console.log(result);
-        //        initLabelDetail(result);
-        //    },
-        //    error:function(msg) { console.log(msg)}
-        //});
-        //getUserListData(params);
+        params = {
+            "labelId": 4,
+            "labelTitle": "攀岩",
+            "labelImg": "http://www.uplady.cn:8080/nbsc_image/images/label/5/1436085778801.jpg",
+            "labelBgImg": "http://www.uplady.cn:8080/nbsc_image/images/label/5/1436085778801.jpg",
+            "labelDes": "攀岩标签",
+            "fansNum": 11,
+            "ifFavorite": false
+        };
+        $.ajax({
+            type: GET,
+            url: AJAX_URL+"labelDetail.do",
+            data: {
+                token: TOKEN,
+                labelId: params.labelId,
+                ifSubject: 1,
+                type: TYPE,
+                version: "1.1.1"
+            },
+            dataType : 'JSON',
+            success: function(result){
+                console.log(result);
+                initLabelDetail(result);
+            },
+            error:function(msg) { console.log(msg)}
+        });
+        getUserListData(params);
     }
     $("#what_user_a").click(function (){
         if(!$("#what_user_a").hasClass("active")){
@@ -133,6 +133,7 @@ function getUserListData(){
     }
 }
 //获取 活动列表数据
+var queryAllActivityList = false;
 function getActivityListData(){
     $("#userList").fadeOut();
     $("#clubList").fadeIn();
@@ -143,14 +144,27 @@ function getActivityListData(){
         var METHOD_URL = AJAX_URL+"activityList.do";
         var CALL_BACK = "initActivityList";
         var data = {
-            labelId: params.labelId,
             page: 1,
             size: 999
         };
+        if(!queryAllActivityList){
+            data.labelId = params.labelId;
+        }
         if(window.Android){
             Android.getData(METHOD_URL, GET, JSON.stringify(data), CALL_BACK);
         }else if(iOS){
             iOS.callHandler('getData', {url: METHOD_URL, method: GET, params: JSON.stringify(data), callBack: CALL_BACK}, function (response) {});
+        }else {
+            $.ajax({
+                type: GET,
+                url: METHOD_URL,
+                data: data,
+                dataType : 'JSON',
+                success: function(result){
+                    initActivityList(result);
+                },
+                error:function(msg) { console.log(msg)}
+            });
         }
     }
     if(dataClubList){
@@ -167,6 +181,17 @@ function getActivityListData(){
             Android.getData(METHOD_URL, GET, JSON.stringify(data), CALL_BACK);
         }else if(iOS){
             iOS.callHandler('getData', {url: METHOD_URL, method: GET, params: JSON.stringify(data), callBack: CALL_BACK}, function (response) {});
+        }else {
+            $.ajax({
+                type: GET,
+                url: METHOD_URL,
+                data: data,
+                dataType : 'JSON',
+                success: function(result){
+                    initClubList(result);
+                },
+                error:function(msg) { console.log(msg)}
+            });
         }
     }
 }
@@ -187,7 +212,15 @@ function initLabelDetail(jsonData){
     $("#labelTitle").html(data.labelDetail.labelTitle);
     $("#labelDes").html(data.labelDetail.labelDes);
     $("#userNum").html(data.labelDetail.userNum);
-    $("#activityNum").html(data.labelDetail.activityNum);
+    if(!data.labelDetail.activityNum || data.labelDetail.activityNum == 0){
+        queryAllActivityList = true;
+        $("#what_activity_a").find(".h4").html("推荐活动");
+        $("#activityNum").html(" ");
+    }else {
+        queryAllActivityList = false;
+        $("#what_activity_a").find(".h4").html("活动");
+        $("#activityNum").html(data.labelDetail.activityNum);
+    }
     labelDetail = data.labelDetail;
     if(labelDetail.ifDream == 1){
         $(".dreaming").addClass("active");

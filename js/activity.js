@@ -24,10 +24,10 @@ $(document).ready(function(){
             delFavoriteActivity(data);
         });
     });
-    //activityId = getUrlParam("activityId");
-    //if(activityId){
-    //    initJS();
-    //}
+    activityId = getUrlParam("activityId");
+    if(activityId){
+        initJS();
+    }
 });
 //初始化
 var params;
@@ -191,7 +191,14 @@ function initActivityDetail(jsonData){
     }
 
     $(".activity_detail_time").html("活动时间："+activityDetail.beginDate + "&nbsp;" + activityDetail.endDate);
-    $(".activeFense").html('<span class="fense">'+activityDetail.activityPrice+'</span>');
+
+    if(activityDetail.feeType == 2){
+        $(".activeFense").html('<span class="fense">免费</span>');
+    }else if(activityDetail.feeType == 1){
+        $(".activeFense").html('特价 <span class="fense">'+activityDetail.activityPrice+'</span>');
+    }else {
+        $(".activeFense").html('<span class="fense">'+activityDetail.activityPrice+'</span>');
+    }
     var priceInclude = activityDetail.priceInclude;
     if(priceInclude && priceInclude.length > 0){
         priceInclude.forEach(function(elem, index){
