@@ -41,26 +41,25 @@ function initJS(){
         });
     }else {
         console.log("Android iOS 没有实现接口，HTML自己获取数据！");
-        //params = {
-        //    "clubId": 9,
-        //    "clubName": "鹤掌门",
-        //    "clubLogo": "http://182.92.243.56:8080/nbsc_image/images/avatar/8_1438333374615.jpg",
-        //    "fansNum": 27
-        //}
-        //$.ajax({
-        //    type: GET,
-        //    url: AJAX_URL+"clubDetail.do",
-        //    data: {
-        //        token: TOKEN,
-        //        clubId: params.clubId
-        //    },
-        //    dataType : 'JSON',
-        //    success: function(result){
-        //        console.log(result);
-        //        initClubDetail(result);
-        //    },
-        //    error:function(msg) { console.log(msg)}
-        //});
+        params = {
+            "clubId": 287,
+            "clubName": "鹤掌门",
+            "clubLogo": "http://182.92.243.56:8080/nbsc_image/images/avatar/8_1438333374615.jpg",
+            "fansNum": 27
+        }
+        $.ajax({
+            type: GET,
+            url: AJAX_URL+"clubDetail.do",
+            data: {
+                clubId: params.clubId
+            },
+            dataType : 'JSON',
+            success: function(result){
+                console.log(result);
+                initClubDetail(result);
+            },
+            error:function(msg) { console.log(msg)}
+        });
     }
 }
 //初始化 详情内容
@@ -129,18 +128,30 @@ function initClubDetail(jsonData){
     if(service){
         var serviceList = service.split(",");
         var $ul;
+        //serviceList = serviceList.concat(serviceList);
+        //serviceList = serviceList.concat(serviceList);
         serviceList.forEach(function(elem, index){
             if(index % 5 == 0){
                 $ul = $('<ul class="tags_info">');
             }
             var $li = $('<li>'+elem+'</li>');
-            $li.clone().appendTo($ul);
-
+            $li.appendTo($ul);
+            var w = $("#content").width();
+            $li.css({
+                "margin": w*0.01+"px",
+                "width": w*0.16+"px",
+                "height": w*0.16+"px",
+                "line-height": w*0.16+"px"
+            });
             if(index == 0){
-                $ul.addClass("mt");
+                $ul.css({
+                    "padding-top": w*0.04+"px"
+                });
             }
             if(index == serviceList.length - 1){
-                $ul.addClass("mb");
+                $ul.css({
+                    "padding-bottom": w*0.04+"px"
+                });
             }
             if((index+1) % 5 == 0 || index == serviceList.length - 1){
                 $ul.clone().appendTo("#content");

@@ -876,6 +876,7 @@ html {
   display: block;
   position: relative;
   height: 150px;
+  min-width: 100%;
 }
 .activity_brand .iA {
   position: absolute;

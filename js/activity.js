@@ -24,10 +24,10 @@ $(document).ready(function(){
             delFavoriteActivity(data);
         });
     });
-    //activityId = getUrlParam("activityId");
-    //if(activityId){
-    //    initJS();
-    //}
+    activityId = getUrlParam("activityId");
+    if(activityId){
+        initJS();
+    }
 });
 //初始化
 var params;
@@ -75,15 +75,14 @@ function initJS(){
 //初始化页面
 var activityDetail;
 function initActivityDetail(jsonData){
-    while(typeof jsonData == 'string' && jsonData.indexOf("\r") != -1){
-        jsonData = jsonData.replace("\r", "");
-    }
-
-    while(typeof jsonData == 'string' && jsonData.indexOf("\n") != -1){
-        jsonData = jsonData.replace("\n", "");
-    }
+    jsonData = convertJSON(jsonData);
     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
     activityDetail = data.activity;
+    if(!activityDetail){
+        $("body").hide();
+        alert("没有找到匹配的活动详情！");
+        return;
+    }
     console.log(activityDetail);
     if(activityDetail.ifFavorite != 1){
         $("#favorite").attr("src", "img/favorite_no.png");
@@ -152,7 +151,7 @@ function initActivityDetail(jsonData){
             icon: 0,
             eventType: 0,
             url: BASE_URL+"club_info.html",
-            params: params,
+            params: activityDetail,
             rightButton: {}
         };
 
@@ -189,8 +188,11 @@ function initActivityDetail(jsonData){
             });
         });
     }
-
-    $(".activity_detail_time").html("活动时间："+activityDetail.beginDate + "&nbsp;" + activityDetail.endDate);
+    if(!activityDetail.beginDate || !activityDetail.endDate){
+        $(".activity_detail_time").html("敬请期待");
+    }else {
+        $(".activity_detail_time").html("活动时间："+activityDetail.beginDate + "&nbsp;" + activityDetail.endDate);
+    }
 
     if(activityDetail.feeType == 2){
         $(".activeFense").html('<span class="fense">免费</span>');
@@ -234,6 +236,10 @@ function initActivityDetail(jsonData){
     }else {
         $("#acctivityAttention").hide();
     }
+    if((!acctivityAttention || acctivityAttention.length == 0) && (!activityTip || activityTip.length == 0)){
+        $("#notice").hide();
+        $("#notice_a").hide();
+    }
     //装备
     var equipmentList = activityDetail.equipmentList;
     if(equipmentList && equipmentList.length > 0){
@@ -257,6 +263,10 @@ function initActivityDetail(jsonData){
         });
     }else {
         $("#clothesList").hide();
+    }
+    if((!equipmentList || equipmentList.length == 0) && (!clothesList || clothesList.length == 0)){
+        $("#equipment").hide();
+        $("#equipment_a").hide();
     }
 
     //打电话

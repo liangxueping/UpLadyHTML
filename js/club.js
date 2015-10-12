@@ -71,6 +71,7 @@ function initJS(){
             "clubLogo": "http://182.92.243.56:8080/nbsc_image/images/avatar/7_1437496517075.jpg",
             "fansNum": 26
         };
+        //params.clubId = 245;
         $.ajax({
             type: GET,
             url: AJAX_URL+"userInfo.do",
@@ -257,6 +258,8 @@ function initDynamicImageList(jsonData){
     dynamicImageList = dataList;
     $('#box_left').empty();
     if(dataList && dataList.length > 0){
+        //dataList = dataList.concat(dataList);
+        //dataList = dataList.concat(dataList);
         dataList.forEach(function(elem){
             var imageList = elem.images;
             imageList.forEach(function(images){
@@ -326,7 +329,7 @@ function initDelFavoriteUser(jsonData){
 //初始化 粉丝
 var fansList;
 function initFansList(jsonData){
-    var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
+    jsonData = convertJSON(jsonData);
     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
     console.log("初始化粉丝：");
     console.log(data);

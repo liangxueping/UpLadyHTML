@@ -793,6 +793,7 @@ html {
   display: block;
   position: relative;
   height: 150px;
+  min-width: 100%;
 }
 .activity_brand .i {
   position: absolute;
@@ -898,6 +899,7 @@ html {
 }
 .player_album_list .album:nth-child(3n+1) {
   width: 34%;
+  min-width: 33%;
   clear: left;
   margin-bottom: -10px;
 }
@@ -1597,8 +1599,8 @@ html {
 
 }
 .slider_event .item{
-  position: absolute;
-  width: 100vw;
+  /*position: absolute;*/
+  width: 100%;
   z-index: 20;
   -webkit-transition-duration:1s;
   -o-transition-duration:1s;
@@ -1732,14 +1734,19 @@ header{
   padding-bottom:4vw;
 }
 .content .tags_info li{
-  margin:1vw;
-  width: 16vw;
-  height: 16vw;
+  /*margin:1vw;*/
+  /*width: 16vw;*/
+  /*height: 16vw;*/
+  /*min-width: 16vw;*/
+  /*min-height: 16vw;*/
+  /*line-height: 16vw;*/
   text-align: center;
   position: relative;
-  line-height: 16vw;
   border:1px solid #bfbfbf;
   border-radius: 50%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .tel_zone{
   background:#0b7900;
