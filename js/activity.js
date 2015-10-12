@@ -144,14 +144,18 @@ function initActivityDetail(jsonData){
         //WebView跳转的地址
         webViewData.url = BASE_URL+"club.html";
         //页面获取数据时使用的参数
-        webViewData.params = activityDetail;
+        webViewData.params = {
+            clubId: activityDetail.clubId
+        };
         //右侧按钮对象
         webViewData.rightButton = {
             title: "帐号信息",
             icon: 0,
             eventType: 0,
             url: BASE_URL+"club_info.html",
-            params: activityDetail,
+            params: {
+                clubId: activityDetail.clubId
+            },
             rightButton: {}
         };
 
