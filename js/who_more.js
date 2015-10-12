@@ -47,6 +47,18 @@ function getRecommendLabel(){
             function (response) {});
     }else {
         console.error("Android iOS 没有实现getData接口！");
+        $.ajax({
+            type: GET,
+            url: METHOD_URL,
+            data: {
+                labelId: 3
+            },
+            dataType : 'JSON',
+            success: function(result){
+                initRecommendLabel(result);
+            },
+            error:function(msg) { console.log(msg)}
+        });
     }
 }
 //初始化 梦想项目
@@ -89,6 +101,17 @@ function getUserListData(){
         Android.getData(METHOD_URL, GET, JSON.stringify(data), CALL_BACK);
     }else if(iOS){
         iOS.callHandler('getData', {url: METHOD_URL, method: GET, params: JSON.stringify(data), callBack: CALL_BACK}, function (response) {});
+    }else {
+        $.ajax({
+            type: GET,
+            url: METHOD_URL,
+            data: data,
+            dataType : 'JSON',
+            success: function(result){
+                initUserList(result);
+            },
+            error:function(msg) { console.log(msg)}
+        });
     }
 }
 
@@ -189,7 +212,29 @@ function initUserList(jsonData){
             if(imageList && imageList.length > 0){
                 imageList.forEach(function(userImage){
                     var $imageA =$('#user_image_a').clone().appendTo($dom.find('.imageList'));
-                    $imageA.find("img").attr("src", userImage.smallImage);
+                    //$imageA.find("img").attr("src", userImage.smallImage);
+                    var bigImageSize = userImage.bigImageSize;
+                    if(!bigImageSize){
+                        $imageA.remove();
+                        return;
+                    }
+                    var w = Number(bigImageSize.split("*")[0]);
+                    var h = Number(bigImageSize.split("*")[1]);
+                    var wCss = 0;
+                    var hCss = 0;
+                    if(w < h){
+                        wCss = 100;
+                        hCss = h/w*100;
+                    }else {
+                        hCss = 100;
+                        wCss = w/h*100;
+                    }
+                    var divW = $imageA.find(".img").width();
+                    $imageA.find(".img").css({
+                        "height": divW+"px",
+                        "background-image": 'url('+userImage.smallImage+')',
+                        "background-size": wCss+"% "+hCss+"%"
+                    });
                     $imageA.click(function(){
                         var appData = {};
                         appData.data = userImage;

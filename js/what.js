@@ -331,7 +331,28 @@ function initUserList(jsonData){
             if(imageList && imageList.length > 0){
                 imageList.forEach(function(userImage){
                     var $imageA =$('#user_image_a').clone().appendTo($dom.find('.imageList'));
-                    $imageA.find("img").attr("src", userImage.smallImage);
+                    var bigImageSize = userImage.bigImageSize;
+                    if(!bigImageSize){
+                        $imageA.remove();
+                        return;
+                    }
+                    var w = Number(bigImageSize.split("*")[0]);
+                    var h = Number(bigImageSize.split("*")[1]);
+                    var wCss = 0;
+                    var hCss = 0;
+                    if(w < h){
+                        wCss = 100;
+                        hCss = h/w*100;
+                    }else {
+                        hCss = 100;
+                        wCss = w/h*100;
+                    }
+                    var divW = $imageA.find(".img").width();
+                    $imageA.find(".img").css({
+                        "height": divW+"px",
+                        "background-image": 'url('+userImage.smallImage+')',
+                        "background-size": wCss+"% "+hCss+"%"
+                    });
                     $imageA.click(function(){
                         var appData = {};
                         appData.data = userImage;

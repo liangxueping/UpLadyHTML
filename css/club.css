@@ -319,6 +319,9 @@ html {
 .album .img {
   border-top: 1px solid #FFF;
   border-right: 1px solid #FFF;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100px;
 }
 /* brand\5934\90E8 */
 .page_brand {

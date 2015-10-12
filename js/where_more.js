@@ -26,9 +26,10 @@ $(document).ready(function(){
 });
 //初始化
 function initJS(){
-    var METHOD_URL = AJAX_URL+"recommendLabel.do";
+    var METHOD_URL = AJAX_URL+"getLabels.do";
     var CALL_BACK = "initRecommendLabel";
     var data = {
+        type: 2,
         page: 1,
         size: 999
     };
@@ -42,14 +43,8 @@ function initJS(){
         console.error("Android iOS 没有实现getData接口！");
         $.ajax({
             type: GET,
-            url: AJAX_URL+"recommendLabel.do",
-            data: {
-                token: TOKEN,
-                labelId: 4,
-                ifSubject: 1,
-                type: TYPE,
-                version: "1.1.1"
-            },
+            url: METHOD_URL,
+            data: data,
             dataType : 'JSON',
             success: function(result){
                 initRecommendLabel(result);

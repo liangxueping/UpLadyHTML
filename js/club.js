@@ -65,41 +65,41 @@ function initJS(){
         });
     }else {
         console.error("Android iOS 没有实现getData接口！");
-        //params = {
-        //    "clubId": 7,
-        //    "clubName": "丛老湿",
-        //    "clubLogo": "http://182.92.243.56:8080/nbsc_image/images/avatar/7_1437496517075.jpg",
-        //    "fansNum": 26
-        //};
-        //$.ajax({
-        //    type: GET,
-        //    url: AJAX_URL+"userInfo.do",
-        //    data: {
-        //        token: TOKEN,
-        //        userId: params.clubId,
-        //        version: "1.1.1"
-        //    },
-        //    dataType : 'JSON',
-        //    success: function(result){
-        //        initUserInfo(result);
-        //    },
-        //    error:function(msg) { console.log(msg)}
-        //});
-        //$.ajax({
-        //    type: GET,
-        //    url: AJAX_URL+"dynamicImageList.do",
-        //    data: {
-        //        token: TOKEN,
-        //        userId: params.clubId,
-        //        type: TYPE,
-        //        version: "1.1.1"
-        //    },
-        //    dataType : 'JSON',
-        //    success: function(result){
-        //        initDynamicImageList(result);
-        //    },
-        //    error:function(msg) { console.log(msg)}
-        //});
+        params = {
+            "clubId": 7,
+            "clubName": "丛老湿",
+            "clubLogo": "http://182.92.243.56:8080/nbsc_image/images/avatar/7_1437496517075.jpg",
+            "fansNum": 26
+        };
+        $.ajax({
+            type: GET,
+            url: AJAX_URL+"userInfo.do",
+            data: {
+                token: TOKEN,
+                userId: params.clubId,
+                version: "1.1.1"
+            },
+            dataType : 'JSON',
+            success: function(result){
+                initUserInfo(result);
+            },
+            error:function(msg) { console.log(msg)}
+        });
+        $.ajax({
+            type: GET,
+            url: AJAX_URL+"dynamicImageList.do",
+            data: {
+                token: TOKEN,
+                userId: params.clubId,
+                type: TYPE,
+                version: "1.1.1"
+            },
+            dataType : 'JSON',
+            success: function(result){
+                initDynamicImageList(result);
+            },
+            error:function(msg) { console.log(msg)}
+        });
     }
 }
 //初始化 title
@@ -228,7 +228,29 @@ function initDynamicImageList(jsonData){
             var imageList = elem.images;
             imageList.forEach(function(images){
                 $album = $("#album_a").clone().appendTo("#box_left");
-                $album.find("img").attr("src", images.smallImage);
+                //$album.find("img").attr("src", images.smallImage);
+                var bigImageSize = images.bigImageSize;
+                if(!bigImageSize){
+                    $album.remove();
+                    return;
+                }
+                var w = Number(bigImageSize.split("*")[0]);
+                var h = Number(bigImageSize.split("*")[1]);
+                var wCss = 0;
+                var hCss = 0;
+                if(w < h){
+                    wCss = 100;
+                    hCss = h/w*100;
+                }else {
+                    hCss = 100;
+                    wCss = w/h*100;
+                }
+                var divW = $album.find(".img").width();
+                $album.find(".img").css({
+                    "height": divW+"px",
+                    "background-image": 'url('+images.smallImage+')',
+                    "background-size": wCss+"% "+hCss+"%"
+                });
                 $album.click(function(){
                     var appData = {};
                     appData.data = images;

@@ -354,7 +354,6 @@ html {
   border-top: 1px solid #FFF;
   border-right: 1px solid #FFF;
   background-position: center;
-  background-size: contain;
   background-repeat: no-repeat;
   height: 100px;
 }
@@ -623,6 +622,9 @@ html {
 .player .playing {
   font-size: 14px;
   color: #B2B2B2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .club {
   display: block;
