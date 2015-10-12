@@ -65,41 +65,41 @@ function initJS(){
         });
     }else {
         console.error("Android iOS 没有实现getData接口！");
-        //params = {
-        //    "clubId": 7,
-        //    "clubName": "丛老湿",
-        //    "clubLogo": "http://182.92.243.56:8080/nbsc_image/images/avatar/7_1437496517075.jpg",
-        //    "fansNum": 26
-        //};
-        //$.ajax({
-        //    type: GET,
-        //    url: AJAX_URL+"userInfo.do",
-        //    data: {
-        //        token: TOKEN,
-        //        userId: params.clubId,
-        //        version: "1.1.1"
-        //    },
-        //    dataType : 'JSON',
-        //    success: function(result){
-        //        initUserInfo(result);
-        //    },
-        //    error:function(msg) { console.log(msg)}
-        //});
-        //$.ajax({
-        //    type: GET,
-        //    url: AJAX_URL+"dynamicImageList.do",
-        //    data: {
-        //        token: TOKEN,
-        //        userId: params.clubId,
-        //        type: TYPE,
-        //        version: "1.1.1"
-        //    },
-        //    dataType : 'JSON',
-        //    success: function(result){
-        //        initDynamicImageList(result);
-        //    },
-        //    error:function(msg) { console.log(msg)}
-        //});
+        params = {
+            "clubId": 7,
+            "clubName": "丛老湿",
+            "clubLogo": "http://182.92.243.56:8080/nbsc_image/images/avatar/7_1437496517075.jpg",
+            "fansNum": 26
+        };
+        $.ajax({
+            type: GET,
+            url: AJAX_URL+"userInfo.do",
+            data: {
+                token: TOKEN,
+                userId: params.clubId,
+                version: "1.1.1"
+            },
+            dataType : 'JSON',
+            success: function(result){
+                initUserInfo(result);
+            },
+            error:function(msg) { console.log(msg)}
+        });
+        $.ajax({
+            type: GET,
+            url: AJAX_URL+"dynamicImageList.do",
+            data: {
+                token: TOKEN,
+                userId: params.clubId,
+                type: TYPE,
+                version: "1.1.1"
+            },
+            dataType : 'JSON',
+            success: function(result){
+                initDynamicImageList(result);
+            },
+            error:function(msg) { console.log(msg)}
+        });
     }
 }
 //初始化 title
@@ -171,6 +171,17 @@ function initUserInfo(jsonData){
                 Android.getData(METHOD_URL, GET, JSON.stringify(data), CALL_BACK);
             }else if(iOS){
                 iOS.callHandler('getData', {url: METHOD_URL, method: GET, params: JSON.stringify(data), callBack: CALL_BACK}, function (response) {});
+            }else {
+                $.ajax({
+                    type: GET,
+                    url: METHOD_URL,
+                    data: data,
+                    dataType : 'JSON',
+                    success: function(result){
+                        initDynamicImageList(result);
+                    },
+                    error:function(msg) { console.log(msg)}
+                });
             }
         }
     });
@@ -188,6 +199,17 @@ function initUserInfo(jsonData){
                 Android.getData(METHOD_URL, GET, JSON.stringify(data), CALL_BACK);
             }else if(iOS){
                 iOS.callHandler('getData', {url: METHOD_URL, method: GET, params: JSON.stringify(data), callBack: CALL_BACK}, function (response) {});
+            }else {
+                $.ajax({
+                    type: GET,
+                    url: METHOD_URL,
+                    data: data,
+                    dataType : 'JSON',
+                    success: function(result){
+                        initFansList(result);
+                    },
+                    error:function(msg) { console.log(msg)}
+                });
             }
         }
     });
@@ -209,6 +231,17 @@ function initUserInfo(jsonData){
                 Android.getData(METHOD_URL, GET, JSON.stringify(data), CALL_BACK);
             }else if(iOS){
                 iOS.callHandler('getData', {url: METHOD_URL, method: GET, params: JSON.stringify(data), callBack: CALL_BACK}, function (response) {});
+            }else {
+                $.ajax({
+                    type: GET,
+                    url: METHOD_URL,
+                    data: data,
+                    dataType : 'JSON',
+                    success: function(result){
+                        initActivityList(result);
+                    },
+                    error:function(msg) { console.log(msg)}
+                });
             }
         }
     });
