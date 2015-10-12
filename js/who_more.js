@@ -47,18 +47,18 @@ function getRecommendLabel(){
             function (response) {});
     }else {
         console.error("Android iOS 没有实现getData接口！");
-        $.ajax({
-            type: GET,
-            url: METHOD_URL,
-            data: {
-                labelId: 3
-            },
-            dataType : 'JSON',
-            success: function(result){
-                initRecommendLabel(result);
-            },
-            error:function(msg) { console.log(msg)}
-        });
+        //$.ajax({
+        //    type: GET,
+        //    url: METHOD_URL,
+        //    data: {
+        //        labelId: 3
+        //    },
+        //    dataType : 'JSON',
+        //    success: function(result){
+        //        initRecommendLabel(result);
+        //    },
+        //    error:function(msg) { console.log(msg)}
+        //});
     }
 }
 //初始化 梦想项目
@@ -102,16 +102,16 @@ function getUserListData(){
     }else if(iOS){
         iOS.callHandler('getData', {url: METHOD_URL, method: GET, params: JSON.stringify(data), callBack: CALL_BACK}, function (response) {});
     }else {
-        $.ajax({
-            type: GET,
-            url: METHOD_URL,
-            data: data,
-            dataType : 'JSON',
-            success: function(result){
-                initUserList(result);
-            },
-            error:function(msg) { console.log(msg)}
-        });
+        //$.ajax({
+        //    type: GET,
+        //    url: METHOD_URL,
+        //    data: data,
+        //    dataType : 'JSON',
+        //    success: function(result){
+        //        initUserList(result);
+        //    },
+        //    error:function(msg) { console.log(msg)}
+        //});
     }
 }
 
