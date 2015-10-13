@@ -59,5 +59,9 @@ function convertJSON(jsonData){
     while(typeof jsonData == 'string' && jsonData.indexOf("\n") != -1){
         jsonData = jsonData.replace("\n", "");
     }
+
+    while(typeof jsonData == 'string' && jsonData.indexOf("\n") != -1){
+        jsonData = jsonData.replace("\t", "");
+    }
     return jsonData;
 }
