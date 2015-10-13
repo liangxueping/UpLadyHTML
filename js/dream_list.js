@@ -55,6 +55,7 @@ function initJS(){
 }
 //初始化 梦想项目
 function initDreamList(jsonData){
+    jsonData = convertJSON(jsonData);
     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
     var userInfo = data.user_info;
     $("#addMore").click(function(){

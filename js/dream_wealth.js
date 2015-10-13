@@ -52,6 +52,7 @@ function initJS(){
 }
 //初始化 梦想基金筹集按钮
 function initDreamList(jsonData){
+    jsonData = convertJSON(jsonData);
     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
     var userInfo = data.user_info;
     $(".dream_list_opts_wrap").click(function(){
@@ -86,6 +87,7 @@ function initDreamList(jsonData){
 }
 //初始化梦想助力统计
 function initDreamHelpTotal(jsonData){
+    jsonData = convertJSON(jsonData);
     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
     if(data && data.status == 100){
         var feeValue = formatNumber(data.feeValue, ",");

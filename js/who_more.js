@@ -62,6 +62,7 @@ function getRecommendLabel(){
 }
 //初始化 梦想项目
 function initRecommendLabel(jsonData){
+    jsonData = convertJSON(jsonData);
     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
     var dataList = data.list;
     $('#labelList').empty();
@@ -120,6 +121,7 @@ function getUserListData(){
 //初始化 达人列表
 var dataUserList;
 function initUserList(jsonData){
+    jsonData = convertJSON(jsonData);
     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
     dataUserList = data;
     var dataList = data.list;
@@ -170,6 +172,7 @@ function initUserList(jsonData){
                     });
                 }
                 window.addFavoriteUser = function(jsonData){
+                    jsonData = convertJSON(jsonData);
                     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
                     console.log(data);
                     if(data.status == 100){
@@ -199,6 +202,7 @@ function initUserList(jsonData){
                     });
                 }
                 window.delFavoriteUser = function(jsonData){
+                    jsonData = convertJSON(jsonData);
                     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
                     console.log(data);
                     if(data.status == 100){

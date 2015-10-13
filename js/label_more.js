@@ -13,9 +13,6 @@ $(document).ready(function(){
         bridge.registerHandler('initJS', function (data, responseCallback) {
             initJS();
         });
-        bridge.registerHandler('initData', function (data, responseCallback) {
-            initData(data);
-        });
         bridge.registerHandler('initLabel', function (data, responseCallback) {
             initLabel(data);
         });
@@ -53,6 +50,7 @@ function initJS(){
 }
 //初始化 热门标签
 function initLabel(jsonData){
+    jsonData = convertJSON(jsonData);
     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
     var labels = data.list;
     if(!labels || labels.length == 0){

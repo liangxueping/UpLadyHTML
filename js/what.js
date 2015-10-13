@@ -198,6 +198,7 @@ function getActivityListData(){
 
 //初始化 标题头
 function initLabelDetail(jsonData){
+    jsonData = convertJSON(jsonData);
     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
 
     if(!data.labelDetail){
@@ -253,6 +254,7 @@ function initLabelDetail(jsonData){
 //初始化 添加梦想
 var labelDetail;
 function initDreaming(jsonData){
+    jsonData = convertJSON(jsonData);
     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
 
     if(data.status == 100){
@@ -270,6 +272,7 @@ function initDreaming(jsonData){
 //初始化 达人列表
 var dataUserList;
 function initUserList(jsonData){
+    jsonData = convertJSON(jsonData);
     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
     dataUserList = data;
     var dataList = data.list;
@@ -320,6 +323,7 @@ function initUserList(jsonData){
                     });
                 }
                 window.addFavoriteUser = function(jsonData){
+                    jsonData = convertJSON(jsonData);
                     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
                     console.log(data);
                     if(data.status == 100){
@@ -349,6 +353,7 @@ function initUserList(jsonData){
                     });
                 }
                 window.delFavoriteUser = function(jsonData){
+                    jsonData = convertJSON(jsonData);
                     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
                     console.log(data);
                     if(data.status == 100){
@@ -407,6 +412,7 @@ function initUserList(jsonData){
 //初始化 活动列表
 var dataActivityList;
 function initActivityList(jsonData){
+    jsonData = convertJSON(jsonData);
     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
     dataActivityList = data;
     var dataList = data.list;
@@ -460,6 +466,7 @@ function initActivityList(jsonData){
 //初始化 俱乐部列表
 var dataClubList;
 function initClubList(jsonData){
+    jsonData = convertJSON(jsonData);
     var params = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
     dataClubList = params;
     var dataList = params.list;

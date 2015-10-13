@@ -69,6 +69,7 @@ function initJS(){
 //初始化方法
 function initData(jsonData){
     $(".home_block").show();
+    jsonData = convertJSON(jsonData);
     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
     if(data == null || data.status != 100){
         return;
@@ -160,6 +161,7 @@ function initSlider(ads){
 
 //初始化 玩什么
 function initLWhat(jsonData){
+    jsonData = convertJSON(jsonData);
     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
     var labels = data.list;
     if(!labels || labels.length == 0){

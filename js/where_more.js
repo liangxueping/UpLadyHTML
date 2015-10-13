@@ -55,6 +55,7 @@ function initJS(){
 }
 //初始化 梦想项目
 function initRecommendLabel(jsonData){
+    jsonData = convertJSON(jsonData);
     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
     var dataList = data.list;
     $('#labelList').empty();
@@ -112,6 +113,7 @@ function getActivityListData(jsonData){
 }
 //初始化 俱乐部列表
 function initClubList(jsonData){
+    jsonData = convertJSON(jsonData);
     var params = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
     var dataList = params.list;
     $('#club_list_slider_content').empty();
@@ -200,6 +202,7 @@ function clickClub(jsonData){
 }
 //初始化 活动列表
 function initActivityList(jsonData){
+    jsonData = convertJSON(jsonData);
     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
     var dataList = data.list;
     $("#activityContent").empty();

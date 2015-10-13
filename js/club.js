@@ -105,6 +105,7 @@ function initJS(){
 }
 //初始化 title
 function initUserInfo(jsonData){
+    jsonData = convertJSON(jsonData);
     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
     console.log("初始化Title：");
     console.log(data);
@@ -251,6 +252,7 @@ function initUserInfo(jsonData){
 //初始化 用户相册列表
 var dynamicImageList;
 function initDynamicImageList(jsonData){
+    jsonData = convertJSON(jsonData);
     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
     console.log("初始化相册：");
     console.log(data);
@@ -306,6 +308,7 @@ function initDynamicImageList(jsonData){
 }
 //初始化 添加关注用户
 function initAddFavoriteUser(jsonData){
+    jsonData = convertJSON(jsonData);
     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
     if(data.status == 100){
         console.log("添加关注成功！");
@@ -317,6 +320,7 @@ function initAddFavoriteUser(jsonData){
 }
 //初始化 取消关注用户
 function initDelFavoriteUser(jsonData){
+    jsonData = convertJSON(jsonData);
     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
     if(data.status == 100){
         console.log("删除关注成功！");
@@ -371,6 +375,7 @@ function initFansList(jsonData){
                     });
                 }
                 window.addFavoriteUser = function(jsonData){
+                    jsonData = convertJSON(jsonData);
                     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
                     console.log(data);
                 }
@@ -397,6 +402,7 @@ function initFansList(jsonData){
                     });
                 }
                 window.delFavoriteUser = function(jsonData){
+                    jsonData = convertJSON(jsonData);
                     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
                 }
             });
@@ -420,6 +426,7 @@ function initFansList(jsonData){
 //初始化 活动
 var activityList;
 function initActivityList(jsonData){
+    jsonData = convertJSON(jsonData);
     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
     console.log("初始化活动：");
     console.log(data);

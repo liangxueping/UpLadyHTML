@@ -70,6 +70,7 @@ function initJS(){
 }
 //初始化 梦想项目
 function initRecommendLabel(jsonData){
+    jsonData = convertJSON(jsonData);
     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
     var dataList = data.list;
     nextpage = data.nextpage;
@@ -102,6 +103,7 @@ function initRecommendLabel(jsonData){
                     CALL_BACK = "addFavoriteLabel";
                     params.type = 1;
                     window.addFavoriteLabel = function (jsonData){
+                        jsonData = convertJSON(jsonData);
                         var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
                         if(data.status == 100){
                             console.log("添加关注梦想项目成功！");
@@ -115,6 +117,7 @@ function initRecommendLabel(jsonData){
                     CALL_BACK = "delFavoriteLable";
                     params.type = 0;
                     window.delFavoriteLable = function (jsonData){
+                        jsonData = convertJSON(jsonData);
                         var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
                         if(data.status == 100){
                             console.log("删除关注梦想项目成功！");

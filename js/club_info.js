@@ -64,13 +64,7 @@ function initJS(){
 }
 //初始化 详情内容
 function initClubDetail(jsonData){
-    while(typeof jsonData == 'string' && jsonData.indexOf("\r") != -1){
-        jsonData = jsonData.replace("\r", "");
-    }
-
-    while(typeof jsonData == 'string' && jsonData.indexOf("\n") != -1){
-        jsonData = jsonData.replace("\n", "");
-    }
+    jsonData = convertJSON(jsonData);
     var data = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
     $(".btn_home").click(function(){
         var webViewData = {};
