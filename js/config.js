@@ -60,7 +60,7 @@ function convertJSON(jsonData){
         jsonData = jsonData.replace("\n", "");
     }
 
-    while(typeof jsonData == 'string' && jsonData.indexOf("\n") != -1){
+    while(typeof jsonData == 'string' && jsonData.indexOf("\t") != -1){
         jsonData = jsonData.replace("\t", "");
     }
     return jsonData;
