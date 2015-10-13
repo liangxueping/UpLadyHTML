@@ -397,8 +397,7 @@ iSlider.prototype._bindHandler = function () {
     };
 
     var endHandler = function (evt) {
-        evt.preventDefault();
-
+        //evt.preventDefault();
         var boundary = self.scale / 2;
         var metric = self.offset;
         var endTime = new Date().getTime();

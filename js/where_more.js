@@ -96,6 +96,17 @@ function getActivityListData(jsonData){
         Android.getData(METHOD_URL, GET, JSON.stringify(data), CALL_BACK);
     }else if(iOS){
         iOS.callHandler('getData', {url: METHOD_URL, method: GET, params: JSON.stringify(data), callBack: CALL_BACK}, function (response) {});
+    }else {
+        $.ajax({
+            type: GET,
+            url: METHOD_URL,
+            data: data,
+            dataType : 'JSON',
+            success: function(result){
+                initClubList(result);
+            },
+            error:function(msg) { console.log(msg)}
+        });
     }
 
     METHOD_URL = AJAX_URL+"activityList.do";
@@ -109,6 +120,17 @@ function getActivityListData(jsonData){
         Android.getData(METHOD_URL, GET, JSON.stringify(data), CALL_BACK);
     }else if(iOS){
         iOS.callHandler('getData', {url: METHOD_URL, method: GET, params: JSON.stringify(data), callBack: CALL_BACK}, function (response) {});
+    }else {
+        $.ajax({
+            type: GET,
+            url: METHOD_URL,
+            data: data,
+            dataType : 'JSON',
+            success: function(result){
+                initActivityList(result);
+            },
+            error:function(msg) { console.log(msg)}
+        });
     }
 }
 //初始化 俱乐部列表
@@ -133,6 +155,7 @@ function initClubList(jsonData){
             $club.find(".uname").html(elem.clubName);
             $club.find(".popular").html(elem.fansNum+"人关注");
             $club.attr("onclick", "clickClub('"+JSON.stringify(elem)+"')");
+            //$club.attr("onclick", "clickClubById('"+elem.clubId+"')");
 
             if((index+1) % 6 == 0 || index == dataList.length - 1){
                 data.push({
