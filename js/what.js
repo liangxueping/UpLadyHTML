@@ -444,14 +444,7 @@ function initActivityList(jsonData){
                 //页面获取数据时使用的参数
                 webViewData.params = params;
                 //右侧按钮对象
-                webViewData.rightButton = {
-                    title:"活动详情",
-                    icon:1,
-                    eventType:2,
-                    url: ROOT_RUL,
-                    content: params.activityName,
-                    logo:params.activityLogo
-                };
+                webViewData.rightButton = {};
                 if(window.Android){
                     Android.loadURL(JSON.stringify(webViewData));
                 }else if(iOS){
