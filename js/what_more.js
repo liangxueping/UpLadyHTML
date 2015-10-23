@@ -150,7 +150,14 @@ function initRecommendLabel(jsonData){
                 //页面获取数据时使用的参数
                 webViewData.params = params;
                 //右侧按钮对象
-                webViewData.rightButton = {};
+                webViewData.rightButton = {
+                    title: params.labelTitle,
+                    icon: 3,
+                    eventType: 3,
+                    url: "",
+                    params: params,
+                    rightButton: {}
+                };
                 var appData = {};
                 appData.data = webViewData;
                 if(window.Android){
