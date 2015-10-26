@@ -118,7 +118,7 @@ function initSlider(ads){
             dom: $('#slider')[0],
             data: data,
             isLooping: true,
-            isAutoplay: true,
+            isAutoplay: false,
             onslidechange: function(current) {
                 $('#slider_pages').find('i').removeClass('current');
                 $($('#slider_pages').find('i').get(current)).addClass('current');

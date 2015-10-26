@@ -184,7 +184,7 @@ function initClubList(jsonData){
             data: data,
             type: 'dom',
             isLooping: true,
-            isAutoplay: true,
+            isAutoplay: false,
             duration: 3000,
             onslidechange: function(current) {
                 $('#club_list_slider_pages').find('i').removeClass('current');

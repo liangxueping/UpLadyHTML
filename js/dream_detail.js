@@ -195,17 +195,19 @@ function initTitleImage(dreamBackPicList){
             opacity: 0,
             "background-image": 'url('+imgUrl+')'
         });
-        $("#title_image").animate({
-            opacity: 1
-        }, "slow", function(){
-            setTimeout(function(){
-                $("#title_image").animate({
-                    opacity: 0
-                }, "slow", function(){
-                    initTitleImage(dreamBackPicList);
-                });
-            }, 3000);
-        });
+        if(dreamBackPicList.length > 1){
+            $("#title_image").animate({
+                opacity: 1
+            }, "slow", function(){
+                setTimeout(function(){
+                    $("#title_image").animate({
+                        opacity: 0
+                    }, "slow", function(){
+                        initTitleImage(dreamBackPicList);
+                    });
+                }, 3000);
+            });
+        }
     }
 }
 
