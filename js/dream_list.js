@@ -162,10 +162,10 @@ function initTitleImage(dreamBackPicList){
             opacity: 0,
             "background-image": 'url('+imgUrl+')'
         });
-        if(dreamBackPicList.length > 1){
-            $("#title_image").animate({
-                opacity: 1
-            }, "slow", function(){
+        $("#title_image").animate({
+            opacity: 1
+        }, "slow", function(){
+            if(dreamBackPicList.length > 1){
                 setTimeout(function(){
                     $("#title_image").animate({
                         opacity: 0
@@ -173,7 +173,7 @@ function initTitleImage(dreamBackPicList){
                         initTitleImage(dreamBackPicList);
                     });
                 }, 3000);
-            });
-        }
+            }
+        });
     }
 }
