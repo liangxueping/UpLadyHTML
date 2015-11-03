@@ -165,6 +165,7 @@ function initRecommendLabel(jsonData){
                     Android.openWindow(JSON.stringify(appData));
                 }else if(iOS){
                     appData.method = "NBPublicWebViewController";
+                    webViewData.rightButton = {};
                     iOS.callHandler('openWindow', JSON.stringify(appData), function (response) {});
                 }else {
                     console.error("APP未注册JavaScript方法，跳转地址："+webViewData.url);

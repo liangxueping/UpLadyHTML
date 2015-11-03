@@ -1,3 +1,6 @@
+/* ../../../../lib/com/_projectInfo/1.css */
+#PROJECTINFO{name:"lady_v3";version:"test";update:"Wed Oct 28 2015 00:23:35 GMT+0800";}
+/* /--- */
 
 /* ../../../../lib/com/_reset_h5/1.css */
 *{margin:0;padding:0;}
@@ -244,6 +247,11 @@ body {
   height: 20px;
   background-position: 0 -110px;
 }
+.iG_member {
+  width: 20px;
+  height: 20px;
+  background-position: -20px -110px;
+}
 .iG_what {
   width: 50px;
   height: 50px;
@@ -350,6 +358,16 @@ html {
   -ms-background-size: cover;
   background-size: cover;
 }
+.cover.mask:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1;
+}
 .album .img {
   border-top: 1px solid #FFF;
   border-right: 1px solid #FFF;
@@ -407,6 +425,13 @@ html {
 .player_page_brand .follow .i {
   margin-right: 5px;
 }
+.player_page_brand .cover:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.2);
+}
 .subject_card {
   position: absolute;
   top: 35px;
@@ -458,6 +483,16 @@ html {
 }
 .subject_page_brand .dreaming .i {
   margin-right: 5px;
+}
+.subject_page_brand .cover:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1;
 }
 /* \53EF\5C55\5F00\7684\5BFC\822A\680F£¬\80FD expended \7C7B\540D\63A7\5236 */
 .expand_navs {
@@ -893,7 +928,7 @@ html {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.2);
 }
 .activity_brand .card {
   position: absolute;
@@ -1122,9 +1157,7 @@ html {
   margin-top: 5px;
 }
 .home_block_footer {
-  border: 1px solid #ADADAD;
-  border-width: 1px 0;
-  background: #EAEAEA;
+  background: #F5F5F5;
 }
 .home_block_footer .show_more {
   display: block;
@@ -1253,6 +1286,9 @@ html {
   font-size: 14px;
   color: #FFF;
 }
+.club_list_slider {
+  margin: 10px 0;
+}
 .brand_list_tabs {
   text-align: center;
 }
@@ -1282,6 +1318,16 @@ html {
 .activity_page_brand .activity_card .description {
   font-size: 12px;
   color: #FFF;
+}
+.activity_page_brand .cover:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 1;
 }
 .activity_page_navs {
   position: relative;
@@ -1834,4 +1880,288 @@ html {
 }
 .wealth_helper_block + .wealth_helper_block {
   border-top: 1px solid #E2E2E3;
+}
+/*add style by Guz*/
+.club_page_brand {
+  position: relative;
+  height: 180px;
+  background: #ccc;
+}
+.club_page_brand .cover {
+  overflow: hidden;
+}
+.club_page_brand .cover:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.2);
+}
+.club_page_brand .follow {
+  position: absolute;
+  z-index: 9;
+  top: 12px;
+  right: 10px;
+  width: 80px;
+  height: 32px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 3px;
+  text-align: center;
+  line-height: 32px;
+  font-size: 16px;
+  color: #FFF;
+}
+.club_page_brand .follow .i {
+  margin-right: 5px;
+}
+.club_page_brand .follow.had {
+  background: #FFD800;
+  color: #000;
+}
+.club_page_navs .nav {
+  height: 58px;
+  padding-bottom: 2px;
+  border-left: 1px solid #ADADAD;
+}
+.club_page_navs .nav:first-child {
+  border-left: none;
+}
+.club_page_navs .nav.active {
+  padding-bottom: 0;
+  border-bottom: 2px solid #FFD800;
+}
+.club_page_navs .nav .h4 {
+  font-size: 16px;
+  color: #484848;
+}
+.club_page_navs .nav .des {
+  font-size: 16px;
+  color: #B2B2B2;
+}
+.pl1w {
+  padding-left: 1vw;
+}
+.mb1 {
+  margin-bottom: 1px;
+}
+.mt2 {
+  margin-top: 2px;
+}
+.sc_lock {
+  width: 100vw;
+  overflow: hidden;
+}
+.slider_event .item {
+  position: absolute;
+  width: 100vw;
+  z-index: 20;
+  -webkit-transition-duration: 1s;
+  -o-transition-duration: 1s;
+  -moz-transition-duration: 1s;
+  transition-duration: 1s;
+}
+.follow {
+  -webkit-transition-duration: 1s;
+  -o-transition-duration: 1s;
+  -moz-transition-duration: 1s;
+  transition-duration: 1s;
+}
+.hide {
+  opacity: 0;
+}
+.switch_hide {
+  opacity: 0;
+  z-index: 8 !important;
+}
+.op0 {
+  opacity: 0;
+}
+#album,
+#fans,
+#event {
+  position: relative;
+}
+.nav.current:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background: #FFD800;
+  width: 100%;
+  -webkit-animation: on 0.35s ease-in;
+  animation: on 0.35s ease-in;
+}
+@-webkit-keyframes on {
+  0% {
+    -webkit-transform: scaleX(0);
+  }
+  100% {
+    -webkit-transform: scaleX(1);
+  }
+}
+@-webkit-keyframes fadeInDown {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+.fadeInDown {
+  -webkit-animation-name: fadeInDown;
+  animation-name: fadeInDown;
+}
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+.fixed_nav {
+  position: fixed;
+  width: 100vw;
+  z-index: 100;
+  top: 0;
+  background: #fff;
+}
+.player_card.info {
+  top: 20px !important;
+}
+header {
+  width: 100%;
+  position: relative;
+}
+.info_page {
+  height: 100px;
+}
+.info_page .uname {
+  margin-top: 15px;
+}
+.content {
+  margin-top: 20px;
+  background: #fff;
+  color: #868686;
+  font-size: 14px;
+  margin-bottom: 55px;
+}
+.content h5 {
+  color: #000;
+  font-size: 18px;
+}
+.content ul {
+  border-bottom: 1px solid #bfbfbf;
+  padding: 20px 15px;
+}
+.content ul li {
+  margin-top: 5px;
+}
+.content .tags_info {
+  display: -webkit-box;
+  box-sizing: border-box;
+  border: none;
+  padding: 0 4vw;
+}
+.content .tags_info.mt {
+  padding-top: 4vw;
+}
+.content .tags_info.mb {
+  padding-bottom: 4vw;
+}
+.content .tags_info li {
+  margin: 1vw;
+  width: 16vw;
+  height: 16vw;
+  text-align: center;
+  position: relative;
+  line-height: 16vw;
+  border: 1px solid #bfbfbf;
+  border-radius: 50%;
+}
+.tel_zone {
+  background: #0b7900;
+  padding: 11px 15px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  color: #fff;
+}
+.ico_tel {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  vertical-align: middle;
+  margin-right: 5px;
+  background: url(../../i/ico_tel.png) no-repeat;
+  background-size: contain;
+}
+footer {
+  height: 55px;
+  line-height: 55px;
+  text-align: center;
+  background: #000;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}
+.info_page .btn_home {
+  padding: 4px 5px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  color: #fff;
+  position: absolute;
+  right: 20px;
+  bottom: 5px;
+  z-index: 10;
+}
+.player_brand.item {
+  border-top: 1px solid #adadad;
+  padding-top: 2px;
+  background: #f6f6f6;
+}
+.club_brand_collect_opts {
+  height: 42px;
+}
+.club_brand_collect_opts_wrap {
+  text-align: center;
+  padding: 5px;
+  position: fixed;
+  z-index: 99;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #000;
+}
+.club_brand_collect_opts_wrap .opt {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 3px;
+}
+.club_brand_collect_opts_wrap .btn {
+  display: block;
+  height: 32px;
+  line-height: 32px;
+  font-size: 16px;
+  color: #000;
+  padding: 0 15px;
+  border-radius: 3px;
+  background: #FFD800;
+}
+.club_brand_collect_opts_wrap .btn .i {
+  margin-right: 5px;
 }

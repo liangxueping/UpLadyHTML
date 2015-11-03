@@ -200,6 +200,7 @@ function initLWhat(jsonData){
                     Android.openWindow(JSON.stringify(appData));
                 }else if(iOS){
                     appData.method = "NBPublicWebViewController";
+                    webViewData.rightButton = {};
                     iOS.callHandler('openWindow', JSON.stringify(appData), function (response) {});
                 }else {
                     console.error("APP未注册JavaScript方法，跳转地址："+webViewData.url);
@@ -333,6 +334,13 @@ function initClub(clubs){
                 }
             });
         });
+        if(clubs.length < 6){
+            $('#home_club_footer').hide();
+        }else {
+            $('#home_club_footer').click(function(){
+                console.error("HTML尚未实现更多俱乐部的页面跳转");
+            });
+        }
     }
 }
 //初始化 去哪玩
