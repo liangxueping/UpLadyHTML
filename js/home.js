@@ -338,7 +338,27 @@ function initClub(clubs){
             $('#home_club_footer').hide();
         }else {
             $('#home_club_footer').click(function(){
-                console.error("HTML尚未实现更多俱乐部的页面跳转");
+                var params = {};
+                var webViewData = {};
+                //标题名
+                webViewData.title = "俱乐部";
+                //WebView跳转的地址
+                webViewData.url = BASE_URL+"home_club_more.html";
+                //页面获取数据时使用的参数
+                webViewData.params = params;
+                //右侧按钮对象
+                webViewData.rightButton = {};
+                var appData = {};
+                appData.data = webViewData;
+                if(window.Android){
+                    appData.method = "com.uplady.teamspace.search.WebViewActivity";
+                    Android.openWindow(JSON.stringify(appData));
+                }else if(iOS){
+                    appData.method = "NBPublicWebViewController";
+                    iOS.callHandler('openWindow', JSON.stringify(appData), function (response) {});
+                }else {
+                    console.error("APP未注册JavaScript方法，跳转地址："+webViewData.url);
+                }
             });
         }
     }
