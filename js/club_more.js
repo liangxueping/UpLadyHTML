@@ -77,12 +77,12 @@ function initRecommendLabel(jsonData){
                 if($(this.parentNode).hasClass("expended")){
                     this.parentNode.classList.toggle('expended');
                 }
-                getUserListData();
+                getClubListData();
             });
             if(index == 0){
                 currentType = elem;
                 $dom.addClass("active");
-                getUserListData();
+                getClubListData();
             }else if(index == 3){
                 $('#label_more_a').clone().appendTo('#labelList');
             }
@@ -91,7 +91,7 @@ function initRecommendLabel(jsonData){
 }
 //初始化 达人列表
 var currentType;
-function getUserListData(){
+function getClubListData(){
     var data = typeof currentType == 'string' ? JSON.parse(currentType) : currentType;
     var METHOD_URL = AJAX_URL+"recommendUser.do";
     var CALL_BACK = "initClubList";
@@ -105,16 +105,16 @@ function getUserListData(){
     }else if(iOS){
         iOS.callHandler('getData', {url: METHOD_URL, method: GET, params: JSON.stringify(data), callBack: CALL_BACK}, function (response) {});
     }else {
-        //$.ajax({
-        //    type: GET,
-        //    url: METHOD_URL,
-        //    data: data,
-        //    dataType : 'JSON',
-        //    success: function(result){
-        //        initClubList(result);
-        //    },
-        //    error:function(msg) { console.log(msg)}
-        //});
+        $.ajax({
+            type: GET,
+            url: METHOD_URL,
+            data: data,
+            dataType : 'JSON',
+            success: function(result){
+                initClubList(result);
+            },
+            error:function(msg) { console.log(msg)}
+        });
     }
 }
 

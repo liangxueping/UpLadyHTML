@@ -206,14 +206,7 @@ function clickClub(jsonData){
     //页面获取数据时使用的参数
     webViewData.params = data;
     //右侧按钮对象
-    webViewData.rightButton = {
-        title: "帐号信息",
-        icon: 0,
-        eventType: 0,
-        url: BASE_URL+"club_info.html",
-        params: data,
-        rightButton: {}
-    };
+    webViewData.rightButton = {};
 
     if(window.Android){
         Android.loadURL(JSON.stringify(webViewData));

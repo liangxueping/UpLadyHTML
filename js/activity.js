@@ -148,16 +148,7 @@ function initActivityDetail(jsonData){
             clubId: activityDetail.clubId
         };
         //右侧按钮对象
-        webViewData.rightButton = {
-            title: "帐号信息",
-            icon: 0,
-            eventType: 0,
-            url: BASE_URL+"club_info.html",
-            params: {
-                clubId: activityDetail.clubId
-            },
-            rightButton: {}
-        };
+        webViewData.rightButton = {};
 
         if(window.Android){
             Android.loadURL(JSON.stringify(webViewData));

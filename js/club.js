@@ -102,6 +102,24 @@ function initJS(){
             error:function(msg) { console.log(msg)}
         });
     }
+    $("#clubDetail").click(function(){
+        var webViewData = {};
+        //标题名
+        webViewData.title = "帐号信息";
+        //WebView跳转的地址
+        webViewData.url = BASE_URL+"club_info.html";
+        //页面获取数据时使用的参数
+        webViewData.params = params;
+        //右侧按钮对象
+        webViewData.rightButton = {};
+        if(window.Android){
+            Android.loadURL(JSON.stringify(webViewData));
+        }else if(iOS){
+            iOS.callHandler('loadURL', JSON.stringify(webViewData), function (response) {});
+        }else {
+            console.error("APP未注册JavaScript方法，跳转地址："+webViewData.url);
+        }
+    });
 }
 //初始化 title
 function initUserInfo(jsonData){

@@ -52,7 +52,7 @@ function initJS(){
             type: TYPE
         };
         Android.getData(METHOD_URL, GET, JSON.stringify(data), CALL_BACK);
-        getUserListData(params);
+        getClubListData(params);
     }else if(iOS){
         iOS.callHandler('getParams', {}, function (response) {
             params = response;
@@ -62,7 +62,7 @@ function initJS(){
                 ifSubject: 1,
                 type: TYPE
             };
-            getUserListData(params);
+            getClubListData(params);
             iOS.callHandler('getData', {url: METHOD_URL, method: GET, params: JSON.stringify(data), callBack: CALL_BACK}, function (response) {});
         });
     }else{
@@ -93,10 +93,19 @@ function initJS(){
             },
             error:function(msg) { console.log(msg)}
         });
-        getUserListData(params);
+        getClubListData(params);
     }
+    $("#what_club_a").click(function (){
+        if(!$("#what_club_a").hasClass("active")){
+            $("#what_user_a").removeClass("active");
+            $("#what_activity_a").removeClass("active");
+            $("#what_club_a").addClass("active");
+            getClubListData();
+        }
+    });
     $("#what_user_a").click(function (){
         if(!$("#what_user_a").hasClass("active")){
+            $("#what_club_a").removeClass("active");
             $("#what_activity_a").removeClass("active");
             $("#what_user_a").addClass("active");
             getUserListData();
@@ -104,11 +113,45 @@ function initJS(){
     });
     $("#what_activity_a").click(function (){
         if(!$("#what_activity_a").hasClass("active")){
+            $("#what_club_a").removeClass("active");
             $("#what_user_a").removeClass("active");
             $("#what_activity_a").addClass("active");
             getActivityListData();
         }
     });
+}
+//获取 俱乐部列表数据
+function getClubListData(){
+    $("#userList").fadeOut();
+    $("#activityList").fadeOut();
+    $("#clubList").fadeIn();
+    if(dataClubList){
+        initClubList(dataClubList);
+    }else {
+        var METHOD_URL = AJAX_URL+"clubList.do";
+        var CALL_BACK = "initClubList";
+        var data = {
+            labelId: 3,
+            page: 1,
+            size: 999
+        };
+        if(window.Android){
+            Android.getData(METHOD_URL, GET, JSON.stringify(data), CALL_BACK);
+        }else if(iOS){
+            iOS.callHandler('getData', {url: METHOD_URL, method: GET, params: JSON.stringify(data), callBack: CALL_BACK}, function (response) {});
+        }else {
+            $.ajax({
+                type: GET,
+                url: METHOD_URL,
+                data: data,
+                dataType : 'JSON',
+                success: function(result){
+                    initClubList(result);
+                },
+                error:function(msg) { console.log(msg)}
+            });
+        }
+    }
 }
 //获取 达人列表数据
 function getUserListData(){
@@ -136,7 +179,7 @@ function getUserListData(){
 var queryAllActivityList = false;
 function getActivityListData(){
     $("#userList").fadeOut();
-    $("#clubList").fadeIn();
+    $("#clubList").fadeOut();
     $("#activityList").fadeIn();
     if(dataActivityList){
         initActivityList(dataActivityList);
@@ -162,33 +205,6 @@ function getActivityListData(){
                 dataType : 'JSON',
                 success: function(result){
                     initActivityList(result);
-                },
-                error:function(msg) { console.log(msg)}
-            });
-        }
-    }
-    if(dataClubList){
-        initClubList(dataClubList);
-    }else {
-        var METHOD_URL = AJAX_URL+"clubList.do";
-        var CALL_BACK = "initClubList";
-        var data = {
-            labelId: params.labelId,
-            page: 1,
-            size: 999
-        };
-        if(window.Android){
-            Android.getData(METHOD_URL, GET, JSON.stringify(data), CALL_BACK);
-        }else if(iOS){
-            iOS.callHandler('getData', {url: METHOD_URL, method: GET, params: JSON.stringify(data), callBack: CALL_BACK}, function (response) {});
-        }else {
-            $.ajax({
-                type: GET,
-                url: METHOD_URL,
-                data: data,
-                dataType : 'JSON',
-                success: function(result){
-                    initClubList(result);
                 },
                 error:function(msg) { console.log(msg)}
             });
@@ -463,57 +479,19 @@ function initClubList(jsonData){
     var params = typeof jsonData == 'string' ? JSON.parse(jsonData) : jsonData;
     dataClubList = params;
     var dataList = params.list;
-    $('#club_list_slider_content').empty();
+    $("#clubListContent").empty();
+    $("#clubNum").html(dataList.length);
     if(dataList && dataList.length > 0){
+        $("#clubNum").html(dataList.length);
         $("#clubList").show();
-        var data = [];
-        var $div = $('<div id="tempDiv"></div>');
-        //dataList = dataList.concat(dataList);
-        //dataList = dataList.concat(dataList);
-        dataList.forEach(function(elem, index){
-            if(index % 6 == 0){
-                $div.empty();
-                $div.append($('<div class="club_list cfix"></div>'));
-            }
-            var $club = $('#club_a').clone().appendTo($div.find(".club_list"));
+        dataList.forEach(function(elem){
+            var $club = $("#club_a").clone().appendTo("#clubListContent");
             $club.find("img").attr("src", elem.clubLogo);
             $club.find(".uname").html(elem.clubName);
             $club.find(".popular").html(elem.fansNum+"人关注");
-            $club.attr("onclick", "clickClub('"+JSON.stringify(elem)+"')");
-
-            if((index+1) % 6 == 0 || index == dataList.length - 1){
-                data.push({
-                    content: $div.clone().html()
-                });
-            }
-        });
-        $div.remove();
-        if(dataList.length > 3){
-            $(".club_list_slider").find(".slider").css({
-                height: "266px"
+            $club.click(function(event){
+                clickClub(elem);
             });
-        }
-        var html = '';
-        for (var i = 0; i < data.length; i++) {
-            html += '<i' + (i == 0 ? ' class="current"' : '') + '>' + (i + 1) + '</i>';
-        }
-        $('#club_list_slider_pages').html(html);
-        if (data.length === 1) {
-            $('#club_list_slider_pages').hide();
-        }
-        $('#club_list_slider_content').html("");
-        // api: http://be-fe.github.io/iSlider/index.html
-        var islider = new iSlider({
-            dom: $('#club_list_slider_content')[0],
-            data: data,
-            type: 'dom',
-            isLooping: true,
-            isAutoplay: false,
-            duration: 3000,
-            onslidechange: function(current) {
-                $('#club_list_slider_pages').find('i').removeClass('current');
-                $($('#club_list_slider_pages').find('i').get(current)).addClass('current');
-            }
         });
     }else {
         $("#clubList").hide();
@@ -530,14 +508,7 @@ function clickClub(jsonData){
     //页面获取数据时使用的参数
     webViewData.params = data;
     //右侧按钮对象
-    webViewData.rightButton = {
-        title: "帐号信息",
-        icon: 0,
-        eventType: 0,
-        url: BASE_URL+"club_info.html",
-        params: data,
-        rightButton: {}
-    };
+    webViewData.rightButton = {};
 
     if(window.Android){
         Android.loadURL(JSON.stringify(webViewData));

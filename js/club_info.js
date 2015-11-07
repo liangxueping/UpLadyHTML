@@ -75,14 +75,7 @@ function initClubDetail(jsonData){
         //页面获取数据时使用的参数
         webViewData.params = params;
         //右侧按钮对象
-        webViewData.rightButton = {
-            title: "帐号信息",
-            icon: 0,
-            eventType: 0,
-            url: BASE_URL+"club_info.html",
-            params: params,
-            rightButton: {}
-        };
+        webViewData.rightButton = {};
 
         if(window.Android){
             Android.loadURL(JSON.stringify(webViewData));
@@ -107,6 +100,7 @@ function initClubDetail(jsonData){
     $("#sales").html(clubDetail.sales);
     $("#serviceFeature").html(clubDetail.serviceFeature);
     $("#discount").html(clubDetail.discount);
+    $("#remark").html(clubDetail.memo ? clubDetail.memo : "无");
 
     $(".tel_zone").html('<i class="ico_tel"></i>'+clubDetail.phone).click(function(){
         if(window.Android){
