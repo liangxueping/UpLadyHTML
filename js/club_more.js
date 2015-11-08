@@ -93,7 +93,7 @@ function initRecommendLabel(jsonData){
 var currentType;
 function getClubListData(){
     var data = typeof currentType == 'string' ? JSON.parse(currentType) : currentType;
-    var METHOD_URL = AJAX_URL+"recommendUser.do";
+    var METHOD_URL = AJAX_URL+"clubList.do";
     var CALL_BACK = "initClubList";
     var data = {
         labelId: data.labelId,
@@ -129,22 +129,29 @@ function initClubList(jsonData){
     if(dataList && dataList.length > 0){
         dataList.forEach(function(elem){
             var $dom =$('#user').clone().appendTo($('#userList'));
-            $dom.find("#userIcon").attr("src", elem.userIcon);
+            $dom.find("#userIcon").attr("src", elem.clubLogo);
             $dom.find("#userIcon").click(function(){
-                var appData = {};
-                appData.data = elem;
+                var webViewData = {};
+                //标题名
+                webViewData.title = elem.clubName+"的主页";
+                //WebView跳转的地址
+                webViewData.url = BASE_URL+"club.html";
+                //页面获取数据时使用的参数
+                webViewData.params = {
+                    clubId: elem.clubId
+                };
+                //右侧按钮对象
+                webViewData.rightButton = {};
+
                 if(window.Android){
-                    appData.method = "com.uplady.teamspace.mine.PersonalHomePageAcitity";
-                    Android.openWindow(JSON.stringify(appData));
+                    Android.loadURL(JSON.stringify(webViewData));
                 }else if(iOS){
-                    appData.method = "NBUserDetailsViewController";
-                    iOS.callHandler('openWindow', JSON.stringify(appData), function (response) {});
+                    iOS.callHandler('loadURL', JSON.stringify(webViewData), function (response) {});
                 }else {
-                    console.error("APP未注册JavaScript方法 达人详情");
+                    console.error("APP未注册JavaScript方法，跳转地址："+webViewData.url);
                 }
             });
-            $dom.find("#userName").html(elem.userName);
-            $dom.find("#userTitle").html(elem.userTitle);
+            $dom.find("#userName").html(elem.clubName);
             $dom.find("#fansNum").html(elem.fansNum+"人关注");
             if(elem.ifFavorite == 1){
                 $dom.find("#ifFavorite0").hide();
@@ -155,7 +162,7 @@ function initClubList(jsonData){
             }
             $dom.find("#ifFavorite0").click(function(){
                 var params = {};
-                params.userIds = elem.userId;
+                params.userIds = elem.clubId;
                 params.version = VERSION;
                 var METHOD_URL = AJAX_URL+"addFavoriteUser.do";
                 var CALL_BACK = "addFavoriteUser";
@@ -185,7 +192,7 @@ function initClubList(jsonData){
             });
             $dom.find("#ifFavorite1").click(function(){
                 var params = {};
-                params.userId = elem.userId;
+                params.userId = elem.clubId;
                 params.version = VERSION;
                 var METHOD_URL = AJAX_URL+"delFavoriteUser.do";
                 var CALL_BACK = "delFavoriteUser";
