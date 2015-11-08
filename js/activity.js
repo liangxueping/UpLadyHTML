@@ -212,7 +212,18 @@ function initActivityDetail(jsonData){
     }else {
         $("#priceNoInclude").hide();
     }
-    $("#activityContent").html(activityDetail.activityContent);
+    if(activityDetail.imageList && activityDetail.imageList.length > 0){
+        $("#activityContent").empty();
+        activityDetail.imageList.forEach(function(elem){
+            var $dom = $('<div class="pic"><div class="img"><img src="img/bg.jpg" alt=""></div></div><div class="text"><p></p></div>');
+            $dom.appendTo("#activityContent");
+            $dom.find("img").attr("src", elem.imageUrl);
+            $dom.find("p").html(elem.content);
+        });
+    }else {
+        $("#activityContent").html(activityDetail.activityContent);
+    }
+
     //活动小提示
     var activityTip = activityDetail.activityTip;
     if(activityTip && activityTip.length > 0){
